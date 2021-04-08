@@ -1,0 +1,8 @@
+.calendar-mini__cell_selected {
+    color: #185abc;
+    background-color: #d2e3fc;
+}
+
+.calendar-mini__cell_selected:hover {
+    background-color: #aecbfa;
+}

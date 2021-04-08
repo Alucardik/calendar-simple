@@ -1,0 +1,11 @@
+.calendar-mini__cell_type_weekday {
+    color: #70757a;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: default;
+    border-radius: 100%;
+}
+
+.calendar-mini__cell_type_weekday:hover {
+    background-color: transparent;
+}

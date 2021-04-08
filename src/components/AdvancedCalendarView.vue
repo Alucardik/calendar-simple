@@ -29,14 +29,19 @@
 
 <script>
 import consts from "../assets/scripts/utils/constants.js";
+import shared from "@/assets/scripts/utils/shared";
 
 export default {
   name: "AdvancedCalendarView",
 
+  created() {
+    this.months = consts.months;
+    this.weekdays = consts.weekdays;
+    this.getDayOfTheWeek = shared.getDayOfTheWeek;
+  },
+
   data: function() {
     return {
-      months: consts.months,
-      weekdays: consts.weekdays,
       weekRowAlign: {
         "justify-content": this.period === 1 ? "flex-start" : "space-around",
         "padding-left": this.period === 1 ? "40px" : "0"
@@ -54,13 +59,6 @@ export default {
 
   // статические функции
   methods: {
-    getDayOfTheWeek(baseDate, dayOffset) {
-      const someDay = new Date(baseDate.year, baseDate.month - 1, baseDate.day + dayOffset);
-      // console.log("Начальная дата");
-      // console.log(someDay.getDay());
-      return someDay.getDay()
-
-    }
   },
 
   props: {
