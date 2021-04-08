@@ -1,15 +1,25 @@
 <template>
   <header class="header">
     <div class="header__info">
-      <button v-on:click="selectedDate = getCurDate(selectedDate)">Сегодня</button>
-      <button v-on:click="selectedDate = decMonth(selectedDate)">&lt;</button>
-      <button v-on:click="selectedDate = incMonth(selectedDate)">&gt;</button>
+      <button class="header__button header__button_type_menu"></button>
+      <div class="header__project-name">
+        <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image">
+        Календарь
+      </div>
+      <button class="header__button header__button_type_today" v-on:click="selectedDate = getCurDate(selectedDate)">
+        Сегодня
+      </button>
+      <button class="header__button header__button_type_change-per" v-on:click="selectedDate = decMonth(selectedDate)"></button>
+      <button class="header__button header__button_type_change-per" v-on:click="selectedDate = incMonth(selectedDate)"></button>
       <div class="header__date">
-        {{ selectedDate.day }}.{{ selectedDate.month }}.{{ selectedDate.year }}
+        {{ months[selectedDate.month - 1] }} {{ selectedDate.year }}
       </div>
     </div>
 
-    <nav class="header__settings">Settings Will be here</nav>
+    <nav class="header__settings">
+      <button v-on:click="++period.days">++</button>
+      <button v-on:click="--period.days">--</button>
+    </nav>
   </header>
 </template>
 
@@ -47,11 +57,12 @@ export default {
         date.year += 1;
       }
       return date;
-    }
+    },
   },
 
   props: {
-    selectedDate: Object
+    selectedDate: Object,
+    period: Object
   }
 }
 </script>

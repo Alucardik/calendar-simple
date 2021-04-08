@@ -1,0 +1,6 @@
+.header__project-image {
+    width: 44px;
+    height: 40px;
+    margin-right: 6px;
+    object-fit: contain;
+}

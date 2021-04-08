@@ -1,7 +1,14 @@
 .header__date {
+    margin-left: 16px;
     display: flex;
     margin-top: auto;
     margin-bottom: auto;
 
-    font-weight: bold;
+    color: #3c4043;
+    font-family: 'Open Sans', Roboto,Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 28px;
+    white-space: nowrap;
 }

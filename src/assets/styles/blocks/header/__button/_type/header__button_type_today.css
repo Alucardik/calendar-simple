@@ -1,0 +1,15 @@
+.header__button_type_today {
+    margin-left: 50px;
+    margin-right: 16px;
+    width: 82px;
+    height: 34px;
+    border-radius: 10%;
+    border: rgba(218,220,224, .4) 1px groove;
+    font-family: 'Open Sans', Roboto,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .25px;
+    text-transform: none;
+    opacity: 1;
+    color: #3c4043;
+}

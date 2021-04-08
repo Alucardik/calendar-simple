@@ -1,0 +1,11 @@
+.header__button_type_change-per {
+    width: 32px;
+    height: 32px;
+    background-size: 18px;
+    transform: scaleX(-1);
+    background-image: url("../../../../../images/right-arrow-icon.svg");
+}
+
+.header__button_type_change-per:nth-of-type(2n) {
+    transform: scaleX(1);
+}

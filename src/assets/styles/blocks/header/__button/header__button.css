@@ -1,0 +1,16 @@
+.header__button {
+    border-radius: 50%;
+    background-size: contain;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 100ms linear;
+}
+
+.header__button:hover {
+    background-color: #bdc1c6;;
+}

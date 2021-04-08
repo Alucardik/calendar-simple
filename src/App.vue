@@ -1,6 +1,6 @@
 <template>
   <section class="page">
-    <CalendarHeader v-bind:selectedDate="curDate"/>
+    <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod"/>
     <SimpleCalendarView v-bind:selectedDate="curDate"/>
     <AdvancedCalendarView v-bind:selectedDate="curDate" v-bind:period="curPeriod"/>
   </section>
@@ -23,7 +23,7 @@ export default {
   data: function() {
     return {
       curDate: shared.getCurDate({}),
-      curPeriod: 4,
+      curPeriod: {days: 7},
     }
   },
 
