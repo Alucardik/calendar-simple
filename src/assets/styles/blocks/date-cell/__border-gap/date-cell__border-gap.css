@@ -1,0 +1,6 @@
+.date-cell__border-gap {
+    min-width: 1px;
+    min-height: 12px;
+    height: 100%;
+    border-left: rgba(218,220,224, .4) 1px groove;
+}

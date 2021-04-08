@@ -1,0 +1,7 @@
+.header__date {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-weight: bold;
+}

@@ -1,0 +1,10 @@
+.timeline-column {
+    grid-area: timeline;
+    margin-top: calc(20 / 1153 * 1000px);
+    margin-right: 2px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 10px;
+    font-weight: normal;
+    flex-direction: column;
+}

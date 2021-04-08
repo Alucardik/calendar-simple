@@ -1,0 +1,12 @@
+.main-space {
+    overflow: auto;
+    color: #70757a;
+    grid-area: calendar;
+    padding: 0 20px 25px 15px;
+    display: grid;
+    grid-template-columns: 1fr 70fr;
+    grid-template-rows: 1fr 24fr;
+    grid-template-areas:
+                        ". week-row"
+                        ". timetable";
+}

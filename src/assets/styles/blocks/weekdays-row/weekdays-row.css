@@ -1,0 +1,7 @@
+.weekdays-row {
+    grid-area: week-row;
+    text-align: center;
+    display: flex;
+    justify-content: stretch;
+    font-weight: normal;
+}

@@ -16,8 +16,12 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "css-loader": "5.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "less-loader": "7.1.0",
+    "style-loader": "2.0.0",
+    "vue-devtools": "^5.1.4",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

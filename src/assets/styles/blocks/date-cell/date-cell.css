@@ -1,0 +1,9 @@
+.date-cell {
+    grid-area: timetable;
+    width: 100%;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 20fr 1153fr;
+    grid-template-columns: 10px repeat(7, 1fr);
+}
+

@@ -1,0 +1,10 @@
+.calendar-mini__heading {
+    margin: 0 0 0 15px;
+    align-self: flex-start;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #3c4043;
+    font-family: "Open Sans", sans-serif;
+}

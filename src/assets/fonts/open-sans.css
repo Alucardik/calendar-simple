@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style:  normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("Open Sans/open-sans-v18-latin_cyrillic-regular.woff2") format("woff2"),
+    url("Open Sans/open-sans-v18-latin_cyrillic-regular.woff") format("woff"),
+    url("Open Sans/open-sans-v18-latin_cyrillic-regular.ttf") format("ttf");
+}

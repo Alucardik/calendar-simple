@@ -1,0 +1,8 @@
+.calendar-mini {
+    padding-left: 15px;
+    padding-top: 20px;
+    grid-area: calendar-mini;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+}

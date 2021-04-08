@@ -1,0 +1,9 @@
+.date-cell__border-gap_type_vertical {
+    width: 100%;
+    border-left: none;
+    border-top: rgba(218,220,224, .4) 1px groove;
+    font-size: 10px;
+    font-weight: normal;
+    text-align: left;
+    overflow: visible;
+}
