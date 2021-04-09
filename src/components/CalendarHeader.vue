@@ -1,24 +1,31 @@
 <template>
   <header class="header">
     <div class="header__info">
-      <button class="header__button header__button_type_menu"></button>
+      <button type="button" class="header__button header__button_type_menu"></button>
       <div class="header__project-name">
         <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image">
         Календарь
       </div>
-      <button class="header__button header__button_type_today" v-on:click="selectedDate = getCurDate(selectedDate)">
+      <button type="button" class="header__button header__button_type_today" v-on:click="selectedDate = getCurDate(selectedDate)">
         Сегодня
       </button>
-      <button class="header__button header__button_type_change-per" v-on:click="selectedDate = decMonth(selectedDate)"></button>
-      <button class="header__button header__button_type_change-per" v-on:click="selectedDate = incMonth(selectedDate)"></button>
+      <button type="button" class="header__button header__button_type_change-per" v-on:click="selectedDate = decMonth(selectedDate)"></button>
+      <button type="button" class="header__button header__button_type_change-per" v-on:click="selectedDate = incMonth(selectedDate)"></button>
       <div class="header__date">
         {{ months[selectedDate.month - 1] }} {{ selectedDate.year }}
       </div>
     </div>
 
     <nav class="header__settings">
-      <button v-on:click="++period.days">++</button>
-      <button v-on:click="--period.days">--</button>
+      <button type="button" class="header__button header__button_type_options"
+      v-on:click="toggleDropdown">{{ calcPeriodName }} &#9660;</button>
+      <div class="header__dropdown">
+        <span class="header__dropdown-elem" v-on:click="period.days = 1; toggleDropdown()">День</span>
+        <span class="header__dropdown-elem" v-on:click="period.days = 4; toggleDropdown()">4 Дня</span>
+        <span class="header__dropdown-elem" v-on:click="period.days = 7; toggleDropdown()">Неделя</span>
+      </div>
+<!--      <button v-on:click="++period.days">++</button>-->
+<!--      <button v-on:click="&#45;&#45;period.days">&#45;&#45;</button>-->
     </nav>
   </header>
 </template>
@@ -35,9 +42,24 @@ export default {
     this.months = consts.months;
   },
 
+  mounted() {
+    this.dropdown = document.querySelector(".header__dropdown");
+  },
+
   data: function () {
     return {
     }
+  },
+
+  computed: {
+    calcPeriodName() {
+      if (this.period.days === 7) {
+        return "Неделя";
+      } else if (this.period.days === 4) {
+        return "4 Дня";
+      }
+      return "День";
+    },
   },
 
   methods: {
@@ -58,6 +80,10 @@ export default {
       }
       return date;
     },
+
+    toggleDropdown() {
+      this.dropdown.classList.toggle("header__dropdown_visible");
+    }
   },
 
   props: {

@@ -13,6 +13,9 @@
 @import url(../styles/blocks/header/__project-name/header__project-name.css);
 @import url(../styles/blocks/header/__project-image/header__project-image.css);
 @import url(../styles/blocks/header/__settings/header__settings.css);
+@import url(../styles/blocks/header/__dropdown/header__dropdown.css);
+@import url(../styles/blocks/header/__dropdown/_visible/header__dropdown_visible.css);
+@import url(../styles/blocks/header/__dropdown-elem/header__dropdown-elem.css);
 @import url(../styles/blocks/header/__date/header__date.css);
 
 @import url(../styles/blocks/calendar-mini/calendar-mini.css);

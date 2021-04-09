@@ -1,0 +1,15 @@
+.header__dropdown {
+  min-width: 150px;
+  max-width: 332px;
+  max-height: 319px;
+  background-color: white;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: calc(.05 * 100vh + 18px);
+  right: 70px;
+  border-radius: 8px;
+  min-height: 40px;
+  border: none;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);;
+}

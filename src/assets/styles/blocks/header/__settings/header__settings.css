@@ -1,6 +1,5 @@
 .header__settings {
     display: flex;
     align-items: center;
-    width: 20%;
-    min-width: 200px;
+    min-width: 220px;
 }
