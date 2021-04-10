@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "csvjson-json2csv": "^1.0.3",
+    "pizzly-js": "^0.2.8",
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -21,7 +23,6 @@
     "eslint-plugin-vue": "^6.2.2",
     "less-loader": "7.1.0",
     "style-loader": "2.0.0",
-    "vue-devtools": "^5.1.4",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
