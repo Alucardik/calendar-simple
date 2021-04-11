@@ -20,7 +20,7 @@ export default {
   created() {
     const json2csv = require('csvjson-json2csv');
     const csv = json2csv(constants.obj_test);
-    console.log(csv);
+    // console.log(csv);
     // console.log(JSON.stringify(constants.obj_test));
     // console.log(JSON.stringify(csv));
 
