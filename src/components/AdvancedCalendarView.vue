@@ -67,6 +67,7 @@ export default {
     this.months = consts.months;
     this.weekdays = consts.weekdays;
     this.getDayOfTheWeek = shared.getDayOfTheWeek;
+    // this.
   },
 
   mounted() {

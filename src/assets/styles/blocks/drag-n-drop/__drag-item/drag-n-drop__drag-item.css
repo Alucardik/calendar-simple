@@ -5,13 +5,13 @@
   margin: 1px 0;
   padding: 2px 0 2px 5px;
   text-overflow: ellipsis;
-  height: calc(100% / 144);
+  min-height: calc(100% / 144);
   max-height: 100%;
   outline: none;
   background-color: rgb(3, 155, 229);
-  border-color: rgb(3, 155, 229);
+  /*border-color: rgb(3, 155, 229);*/
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   color: white;
   z-index: 2;
   cursor: pointer;

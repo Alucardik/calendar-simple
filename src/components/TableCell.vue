@@ -1,7 +1,8 @@
 <template>
   <div class="drag-n-drop__drop-zone" v-on:drop="onDrop" v-on:dragover.prevent v-on:dragenter.prevent>
-    <div class="drag-n-drop__drag-item" v-for="item in filteredItems" :key="item.id"
-         :style="positionItem(item)" draggable="true" v-on:dragstart="onDragStart($event, item)">
+    <div v-resize class="drag-n-drop__drag-item" v-for="item in filteredItems" :key="item.id"
+         v-on:resize="onResize($event, item)"
+         :style="renderItem(item)" draggable="true" v-on:dragstart="onDragStart($event, item)">
         {{ item.title }}
 <!--        <div class="drag-n-drop__resize-field"></div>-->
     </div>
@@ -13,6 +14,8 @@ export default {
   name: "TableCell",
 
   created() {
+    // const rzListener = require("element-resize-detector")();
+
   },
 
   props: {
@@ -28,11 +31,25 @@ export default {
 
   methods: {
     onResize(evt, item) {
-      console.log(item.attributes["style"]);
+      if (item.firstRender) {
+        item.firstRender = false;
+        return;
+      }
+      // item.height = Math.round(evt.detail.height / 12.33);
+      // item.duration += 15;
+      // console.log("RESIZED");
+      // console.log(evt.detail.height);
+      // console.log(item.height);
+      item.height = evt.detail.height;
     },
 
-    positionItem(item) {
-      return {"top": `calc(100% / 24 * ${item.row - 1}`};
+    onMouseLeave(evt) {
+      console.log("LEFT!", evt.target.attributes);
+    },
+
+    renderItem(item) {
+      return {"top": `calc(100% / 24 * ${item.row - 1}`,
+              "height": `${item.height}px`};
     },
 
     onDragStart(evt, item)  {
@@ -92,6 +109,7 @@ export default {
       const item = this.items.find(it => it.id === itemID);
       item.column = this.column;
       item.row = parseInt(actCell.attributes["row"].textContent);
+      item.firstRender = true;
       // let i = 0;
       // do {
       //
