@@ -110,6 +110,7 @@ export default {
       const item = this.items.find(it => it.id === itemID);
       item.column = this.column;
       item.row = parseInt(actCell.attributes["row"].textContent);
+      item.firstRender = true;
       // let i = 0;
       // do {
       //
