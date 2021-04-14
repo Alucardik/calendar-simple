@@ -2,7 +2,9 @@
   <section class="page">
     <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod"/>
     <SimpleCalendarView v-bind:selectedDate="curDate"/>
-    <AdvancedCalendarView v-bind:selectedDate="curDate" v-bind:period="curPeriod"/>
+    <AdvancedCalendarView v-bind:selectedDate="curDate"
+                          v-bind:period="curPeriod"
+                          v-bind:eventsArray="draGnDropItems"/>
   </section>
 </template>
 
@@ -71,6 +73,50 @@ export default {
     return {
       curDate: shared.getCurDate({}),
       curPeriod: {days: 7},
+      draGnDropItems:  [
+        {
+          id: "it0",
+          row: 12,
+          column: 1,
+          title: 'Item A',
+        },
+        {
+          id: "it1",
+          row: 7,
+          column: 1,
+          title: 'Item B'
+        },
+        {
+          id: "it2",
+          row: 4,
+          column: 2,
+          title: 'Item C'
+        },
+        {
+          id: "it3",
+          row: 4,
+          column: 1,
+          title: 'Item D',
+        },
+        {
+          id: "it4",
+          row: 4,
+          column: 6,
+          title: 'Item E',
+        },
+        {
+          id: "it5",
+          row: 6,
+          column: 5,
+          title: 'Item F',
+        },
+        {
+          id: "it6",
+          row: 9,
+          column: 7,
+          title: 'Item G',
+        },
+      ]
     }
   },
 

@@ -25,6 +25,11 @@
 @import url(../styles/blocks/calendar-mini/__cell/_selected/calendar-mini__cell_selected.css);
 @import url(../styles/blocks/calendar-mini/__cell/_type/calendar-mini__cell_type_weekday.css);
 
+@import url(../styles/blocks/drag-n-drop/drag-n-drop.css);
+@import url(../styles/blocks/drag-n-drop/__drag-item/drag-n-drop__drag-item.css);
+@import url(../styles/blocks/drag-n-drop/__drop-zone/drag-n-drop__drop-zone.css);
+@import url(../styles/blocks/drag-n-drop/__resize-field/drag-n-drop__resize-field.css);
+
 @import url(../styles/blocks/main-space/main-space.css);
 @import url(../styles/blocks/timeline-column/timeline-column.css);
 @import url(../styles/blocks/timeline-column/__cell/timeline-column__cell.css);
@@ -36,5 +41,6 @@
 @import url(../styles/blocks/date-cell/__border-gap/_type/date-cell__border-gap_type_vertical.css);
 
 @import url(../styles/blocks/date-cell/date-cell.css);
-@import url(../styles/blocks/date-cell/__table-cell/date-cell__table-cell.css);
 @import url(../styles/blocks/date-cell/__contents/date-cell__contents.css);
+@import url(../styles/blocks/date-cell/__table-cell/date-cell__table-cell.css);
+@import url(../styles/blocks/date-cell/__table-cell/_on-top/date-cell__table-cell_on-top.css);

@@ -1,0 +1,5 @@
+.drag-n-drop__resize-field {
+  min-height: 5px;
+  width: 100%;
+  cursor: row-resize;
+}

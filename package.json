@@ -6,19 +6,19 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "^3.10.1",
     "csvjson-json2csv": "^1.0.3",
     "pizzly-js": "^0.2.8",
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "^4.5.12",
+    "@vue/cli-plugin-eslint": "^4.5.12",
+    "@vue/cli-service": "^4.5.12",
     "@vue/compiler-sfc": "^3.0.11",
     "babel-eslint": "^10.1.0",
     "css-loader": "5.0.1",
