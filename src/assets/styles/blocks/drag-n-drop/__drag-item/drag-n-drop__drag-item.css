@@ -5,7 +5,10 @@
   margin: 1px 0;
   padding: 2px 0 2px 5px;
   text-overflow: ellipsis;
-  min-height: calc(100% / 144);
+  /*equals 15 minutes on timetable*/
+  /*min-height: calc(100% / 144);*/
+  /*equals one hour on time table*/
+  min-height: calc(100% / 144 * 5);
   max-height: 100%;
   outline: none;
   background-color: rgb(3, 155, 229);

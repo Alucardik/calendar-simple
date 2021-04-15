@@ -24,8 +24,6 @@
         <span class="header__dropdown-elem" v-on:click="period.days = 4; toggleDropdown()">4 Дня</span>
         <span class="header__dropdown-elem" v-on:click="period.days = 7; toggleDropdown()">Неделя</span>
       </div>
-<!--      <button v-on:click="++period.days">++</button>-->
-<!--      <button v-on:click="&#45;&#45;period.days">&#45;&#45;</button>-->
     </nav>
   </header>
 </template>
@@ -102,13 +100,12 @@ export default {
           })
         })
         .then((response) => {
-          console.log(response.status);
           if (response.ok) {
             window.alert("Data was successfully retrieved");
             return response.json();
           }
-          return response.status;
-          // return new Promise.reject(response.status);
+          // return response.status;
+          return new Promise.reject(response.status);
         })
         .then((res) => {
           console.log(res);

@@ -4,7 +4,7 @@
     <SimpleCalendarView v-bind:selectedDate="curDate"/>
     <AdvancedCalendarView v-bind:selectedDate="curDate"
                           v-bind:period="curPeriod"
-                          v-bind:eventsArray="draGnDropItems"/>
+                          v-bind:eventsArray="workSpaceItems"/>
   </section>
 </template>
 
@@ -14,62 +14,20 @@ import SimpleCalendarView from "@/components/SimpleCalendarView";
 import AdvancedCalendarView from "@/components/AdvancedCalendarView";
 import shared from "@/assets/scripts/utils/shared";
 // import constants from "@/assets/scripts/utils/constants";
-// import Pizzly from 'pizzly-js';
+import getRandomPullSet from "@/assets/scripts/utils/templates";
 
 export default {
   name: 'App',
 
   created() {
-    // const json2csv = require('csvjson-json2csv');
-    // const csv = json2csv(constants.obj_test);
-
-    //______________________________________________________________
-    // const demoInstance = "https://psyc-calendar.herokuapp.com/";
-    // const pubKey = "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj";
-    //______________________________________________________________
-
-
-    // const pizzly = new Pizzly({
-    //   host: "https://psyc-calendar.herokuapp.com/",
-    //   publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
-    // });
-    // const spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
-    //
-    // pizzly
-    //   .integration("google-sheets")
-    //   .auth("20d47430-9980-11eb-849a-795b78c342fc")
-    //   .post(`${spreadsheetId}:batchUpdate`,{
-    //     body: JSON.stringify({
-    //       "requests": [
-    //         {
-    //           "pasteData": {
-    //             "coordinate": {
-    //               "sheetId": 0,
-    //               "rowIndex": 0,
-    //               "columnIndex": 0
-    //             },
-    //             "data": csv,
-    //             "type": "PASTE_VALUES",
-    //             "delimiter": ",",
-    //           }
-    //         }
-    //       ],
-    //       "includeSpreadsheetInResponse": false,
-    //       "responseRanges": [],
-    //       "responseIncludeGridData": false
-    //     })
-    //   })
-    //   .then((response) => {
-    //     console.log(response.status);
-    //     return response.json();
-    //     // return response.body;
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
+    this.pullSet = getRandomPullSet();
+    // this.workSpaceItems = [];
+    // this.genWorkSpace(10, .5);
+    // console.log(this.workSpaceItems);
   },
 
   mounted() {
+    this.workSpaceItems = this.genWorkSpace(15, .2);
   },
 
   data: function() {
@@ -140,7 +98,9 @@ export default {
           title: 'Item G',
           firstRender: true,
         },
-      ]
+      ],
+
+      workSpaceItems: [],
     }
   },
 
@@ -154,6 +114,54 @@ export default {
   },
 
   methods: {
+    genDragItem(actName, pos, target=false) {
+      return {
+        id: `act${pos.row}${pos.column}`,
+        row: pos.row,
+        column: pos.column,
+        duration: 15,
+        height: 1,
+        title: actName,
+        firstRender: true,
+        isTarget: target
+      }
+    },
+
+    genWorkSpace(perColumn, targetPercentage) {
+      const newWorkspace = [];
+      console.log("TARGETS TO GENERATE:", Math.ceil(perColumn * targetPercentage));
+      for (let i = 0; i < this.curPeriod.days; ++i) {
+        let targetsLeft = Math.ceil(perColumn * targetPercentage);
+        for (let j = 0; j < perColumn; ++j) {
+          //checking slots left
+          // if too few left => generate only targets
+          if (perColumn - j === targetsLeft) {
+            newWorkspace.push(this.genDragItem(
+              this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
+              {column: i + 1, row: j + 1}, true));
+            --targetsLeft;
+            continue;
+          }
+
+          // if there are spare slots =>
+          // choose targer or distractor randomly
+          if (Math.random() > 0.5 && targetsLeft) {
+            // chosen target if any are left
+            newWorkspace.push(this.genDragItem(
+              this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
+              {column: i + 1, row: j + 1}, true));
+            --targetsLeft;
+          } else {
+            // chosen distractor
+            newWorkspace.push(this.genDragItem(
+              this.pullSet[1][Math.floor(Math.random() * this.pullSet[1].length)],
+              {column: i + 1, row: j + 1}));
+          }
+        }
+      }
+
+      return newWorkspace;
+    }
   },
 }
 </script>

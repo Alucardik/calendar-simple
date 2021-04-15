@@ -54,7 +54,8 @@ export default {
 
     renderItem(item) {
       return {"top": `calc(100% / 24 * ${item.row - 1}`,
-              "height": `${item.height}px`};
+              "height": `${item.height}px`,
+              "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"};
     },
 
     onDragStart(evt, item)  {
