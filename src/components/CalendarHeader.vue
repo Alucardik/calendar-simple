@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__info">
-      <button type="button" class="header__button header__button_type_menu"></button>
+      <button type="button" class="header__button header__button_type_menu" v-on:click="triggerAPI"></button>
       <div class="header__project-name">
         <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image">
         Календарь
@@ -33,11 +33,21 @@
 <script>
 import consts from "@/assets/scripts/utils/constants";
 import shared from "@/assets/scripts/utils/shared";
+import Pizzly from 'pizzly-js';
 
 export default {
   name: "CalendarHeader",
 
   created() {
+    this.json2csv = require('csvjson-json2csv');
+    this.pizzly = new Pizzly({
+      host: "https://psyc-calendar.herokuapp.com/",
+      publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
+    });
+    this.spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
+    this.authId = "20d47430-9980-11eb-849a-795b78c342fc";
+
+
     this.getCurDate = shared.getCurDate;
     this.months = consts.months;
   },
@@ -63,6 +73,52 @@ export default {
   },
 
   methods: {
+    triggerAPI() {
+      const csv = this.json2csv(this.stats);
+      console.log("STATS\n", csv);
+
+      this.pizzly
+        .integration("google-sheets")
+        .auth(this.authId)
+        .post(`${this.spreadsheetId}:batchUpdate`,{
+          body: JSON.stringify({
+            "requests": [
+              {
+                "pasteData": {
+                  "coordinate": {
+                    "sheetId": 0,
+                    "rowIndex": 0,
+                    "columnIndex": 0
+                  },
+                  "data": csv,
+                  "type": "PASTE_VALUES",
+                  "delimiter": ",",
+                }
+              }
+            ],
+            "includeSpreadsheetInResponse": false,
+            "responseRanges": [],
+            "responseIncludeGridData": false
+          })
+        })
+        .then((response) => {
+          console.log(response.status);
+          if (response.ok) {
+            window.alert("Data was successfully retrieved");
+            return response.json();
+          }
+          return response.status;
+          // return new Promise.reject(response.status);
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch(err => {
+          window.alert(`API encountered error with status:\n${err}`);
+        });
+
+    },
+
     decMonth(date) {
       date.month -= 1;
       if (!date.month) {
@@ -88,7 +144,8 @@ export default {
 
   props: {
     selectedDate: Object,
-    period: Object
+    period: Object,
+    stats: Array
   }
 }
 </script>

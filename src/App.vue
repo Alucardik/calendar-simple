@@ -1,6 +1,6 @@
 <template>
   <section class="page">
-    <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod"/>
+    <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod" :stats="draGnDropItems"/>
     <SimpleCalendarView v-bind:selectedDate="curDate"/>
     <AdvancedCalendarView v-bind:selectedDate="curDate"
                           v-bind:period="curPeriod"
@@ -67,6 +67,9 @@ export default {
     //   .then((res) => {
     //     console.log(res);
     //   });
+  },
+
+  mounted() {
   },
 
   data: function() {

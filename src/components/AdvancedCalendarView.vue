@@ -64,14 +64,22 @@ export default {
   },
 
   created() {
+    // this.resizeTriggered = {windowRs: true};
     this.months = consts.months;
     this.weekdays = consts.weekdays;
     this.getDayOfTheWeek = shared.getDayOfTheWeek;
-    // this.
   },
 
   mounted() {
+    // window.addEventListener("resize", () => {
+    //   console.log("before window resize:", this.resizeTriggered.windowRs);
+    //   this.resizeTriggered.windowRs = true;
+    //   console.log("after window resize:", this.resizeTriggered.windowRs);
+    // })
     // this.timetable = document.querySelectorAll(".date-cell__table-cell");
+  },
+
+  updated() {
   },
 
   data: function() {
@@ -147,7 +155,7 @@ export default {
   props: {
     eventsArray: Array,
     selectedDate: Object,
-    period: Object
+    period: Object,
   }
 
 }
