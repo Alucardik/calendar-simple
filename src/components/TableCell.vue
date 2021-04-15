@@ -1,7 +1,7 @@
 <template>
   <div class="drag-n-drop__drop-zone" v-on:drop="onDrop" v-on:dragover.prevent v-on:dragenter.prevent>
     <div v-resize="{ callOnAdd: false }" class="drag-n-drop__drag-item" v-for="item in filteredItems" :key="item.id"
-         v-on:resize="onResize($event, item)"
+         v-on:resize="onResize($event, item)" v-on:click="onClick"
          :style="renderItem(item)" draggable="true" v-on:dragstart="onDragStart($event, item)">
         {{ item.title }}
 <!--        <div class="drag-n-drop__resize-field"></div>-->
@@ -122,6 +122,10 @@ export default {
       // }
       // this.$parent.moveCellsOnTop(false);
     },
+
+    onClick(evt) {
+      evt.target.classList.toggle("drag-n-drop__drag-item_striked");
+    }
   }
 }
 </script>

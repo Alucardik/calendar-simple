@@ -27,6 +27,7 @@
 
 @import url(../styles/blocks/drag-n-drop/drag-n-drop.css);
 @import url(../styles/blocks/drag-n-drop/__drag-item/drag-n-drop__drag-item.css);
+@import url(../styles/blocks/drag-n-drop/__drag-item/_striked/drag-n-drop__drag-item_striked.css);
 @import url(../styles/blocks/drag-n-drop/__drop-zone/drag-n-drop__drop-zone.css);
 @import url(../styles/blocks/drag-n-drop/__resize-field/drag-n-drop__resize-field.css);
 
