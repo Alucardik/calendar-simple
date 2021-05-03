@@ -27,7 +27,8 @@ export default {
   },
 
   mounted() {
-    this.workSpaceItems = this.genWorkSpace(15, .2);
+    this.workSpaceItems = this.genWorkSpace(15, .5);
+    // this.workSpaceItems = this.draGnDropItems;
   },
 
   data: function() {
