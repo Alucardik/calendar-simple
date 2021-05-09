@@ -1,5 +1,5 @@
 <template>
-  <section class="page">
+  <section class="page page_type_main">
         <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod" :stats="draGnDropItems"/>
         <SimpleCalendarView v-bind:selectedDate="curDate"/>
         <AdvancedCalendarView v-bind:selectedDate="curDate"
@@ -20,13 +20,10 @@ export default {
 
   created() {
     this.pullSet = getRandomPullSet();
-    // this.genWorkSpace(10, .5);
-    // console.log(this.workSpaceItems);
   },
 
   mounted() {
     this.workSpaceItems = this.genWorkSpace(15, .5);
-    // this.workSpaceItems = this.draGnDropItems;
   },
 
   data: function() {
@@ -165,4 +162,5 @@ export default {
 </script>
 
 <style>
+@import url('../assets/pages/index.css');
 </style>

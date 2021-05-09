@@ -2,6 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import Home from "./components/Home";
 import Main from "./components/Main";
+import Instruction from "./components/Instruction";
+import Config from "./components/Config";
 
 Vue.config.productionTip = false;
 
@@ -16,6 +18,14 @@ const routes = [
   {
     path: "/workspace",
     component: Main
+  },
+  {
+    path: "/about",
+    component: Instruction
+  },
+  {
+    path: "/config",
+    component: Config
   },
   {
     path: "*",

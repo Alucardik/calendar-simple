@@ -1,8 +1,15 @@
 <template>
-  <section style="background-color: antiquewhite; display: flex; width: 100vw; height: 100vh">
-    <div style="margin: auto; display: flex; flex-direction: column;">
-      <router-link to="/workspace">
-        Начать
+  <section class="page">
+    <p class="home__welcome">
+      <span>Добро пожаловать.</span>
+      <span>Пожалуйста, выберите действие.</span>
+    </p>
+    <div class="home">
+      <router-link to="/about" class="home__link">
+        Начать сессию
+      </router-link>
+      <router-link to="/config" class="home__link">
+        Настройки сессии
       </router-link>
     </div>
   </section>
@@ -15,5 +22,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import url('../assets/pages/home.css');
 </style>

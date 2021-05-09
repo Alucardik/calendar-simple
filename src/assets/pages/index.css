@@ -1,7 +1,9 @@
+@import url(../styles/vendor/normalize.css);
 @import url(../styles/blocks/utility.css);
 @import url(../fonts/open-sans.css);
 
 @import url(../styles/blocks/page/page.css);
+@import url(../styles/blocks/page/_type/page_type_main.css);
 
 @import url(../styles/blocks/header/header.css);
 @import url(../styles/blocks/header/__info/header__info.css);

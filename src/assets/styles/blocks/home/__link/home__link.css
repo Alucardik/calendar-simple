@@ -1,0 +1,10 @@
+.home__link {
+  text-decoration: none;
+  color: black;
+  margin-top: 20px;
+  font-size: 28px;
+}
+
+.home__link:hover {
+  opacity: 0.7;
+}

@@ -1,0 +1,11 @@
+.home__welcome {
+  margin: 40px auto 0;
+  padding: 0;
+  font-size: 50px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 75%;
+}

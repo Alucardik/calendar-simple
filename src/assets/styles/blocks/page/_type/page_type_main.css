@@ -1,0 +1,14 @@
+.page_type_main {
+  display: grid;
+  grid-template-rows: 1fr repeat(5, 4fr);
+  grid-template-columns: 1fr 8fr;
+  grid-template-areas:
+                        "header header"
+                        "calendar-mini calendar"
+                        ". calendar"
+                        ". calendar"
+                        ". calendar"
+                        ". calendar";
+  grid-row-gap: 10px;
+  grid-column-gap: 15px;
+}
