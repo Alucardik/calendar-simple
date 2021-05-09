@@ -1,30 +1,25 @@
 <template>
-  <router-view></router-view>
-<!--  <Home />-->
-<!--  <section class="page">-->
-<!--    <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod" :stats="draGnDropItems"/>-->
-<!--    <SimpleCalendarView v-bind:selectedDate="curDate"/>-->
-<!--    <AdvancedCalendarView v-bind:selectedDate="curDate"-->
-<!--                          v-bind:period="curPeriod"-->
-<!--                          v-bind:eventsArray="workSpaceItems"/>-->
-<!--  </section>-->
+  <section class="page">
+        <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod" :stats="draGnDropItems"/>
+        <SimpleCalendarView v-bind:selectedDate="curDate"/>
+        <AdvancedCalendarView v-bind:selectedDate="curDate"
+                              v-bind:period="curPeriod"
+                              v-bind:eventsArray="workSpaceItems"/>
+  </section>
 </template>
 
 <script>
-// import Home from "./components/Home";
-// import CalendarHeader from "@/components/CalendarHeader";
-// import SimpleCalendarView from "@/components/SimpleCalendarView";
-// import AdvancedCalendarView from "@/components/AdvancedCalendarView";
-import shared from "@/assets/scripts/utils/shared";
-// import constants from "@/assets/scripts/utils/constants";
-import getRandomPullSet from "@/assets/scripts/utils/templates";
+import CalendarHeader from "./CalendarHeader";
+import SimpleCalendarView from "./SimpleCalendarView";
+import AdvancedCalendarView from "./AdvancedCalendarView";
+import shared from "../assets/scripts/utils/shared";
+import getRandomPullSet from "../assets/scripts/utils/templates";
 
 export default {
   name: 'App',
 
   created() {
     this.pullSet = getRandomPullSet();
-    // this.workSpaceItems = [];
     // this.genWorkSpace(10, .5);
     // console.log(this.workSpaceItems);
   },
@@ -38,6 +33,7 @@ export default {
     return {
       curDate: shared.getCurDate({}),
       curPeriod: {days: 7},
+      workSpaceItems: [],
       draGnDropItems:  [
         {
           id: "it0",
@@ -103,17 +99,13 @@ export default {
           firstRender: true,
         },
       ],
-
-      workSpaceItems: [],
     }
   },
 
   components: {
-    // Home
-    // CalendarHeader,
-    // AdvancedCalendarView,
-    // SimpleCalendarView,
-    // Home,
+    CalendarHeader,
+    AdvancedCalendarView,
+    SimpleCalendarView,
   },
 
   computed: {
@@ -173,6 +165,4 @@ export default {
 </script>
 
 <style>
-@import url('./assets/styles/vendor/normalize.css');
-@import url('assets/pages/index.css');
 </style>
