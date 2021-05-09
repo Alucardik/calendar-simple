@@ -52,6 +52,16 @@ const obj_test = [
   }
 ];
 
+const tasksTexts = {
+  proofreading: {
+    intro: "Сейчас перед Вами появится список слов для запоминания.",
+    memTime: "Время предъявления (в секундах): ",
+    conclusion: "После этого вы будете перенаправлены в пространство ежедневника." +
+      "Вы должны щелчком мыши отмечать дела, соответствующие только что запомненным словам.",
+    taskTime: "Время на выполнение (в секундах): "
+  },
+};
+
 const weekdays = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ'];
 const weekdayNames = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
 const months =  [
@@ -59,4 +69,4 @@ const months =  [
     'Август','Сентябрь','Октябрь','Ноябрь','Декабрь'
 ];
 
-export default {weekdays, weekdayNames, months, obj_test}
+export default {weekdays, weekdayNames, months, obj_test, tasksTexts}

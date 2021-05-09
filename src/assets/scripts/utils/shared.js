@@ -1,5 +1,7 @@
+import constants from "./constants";
+
 export default {
-  getCurDate(date) {
+  getCurDate: (date) => {
       const today = new Date();
       date.day = today.getDate();
       date.month = today.getMonth() + 1;
@@ -9,10 +11,7 @@ export default {
 
   getDayOfTheWeek: (baseDate, dayOffset) => {
       const someDay = new Date(baseDate.year, baseDate.month - 1, baseDate.day + dayOffset);
-      // console.log("Начальная дата");
-      // console.log(someDay.getDay());
       return someDay.getDay()
-
   },
 
   sessionConfig: {
@@ -24,5 +23,28 @@ export default {
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
     taskOffset: 60
+  },
+
+  genTaskInstruction: (config) => {
+    const template = constants.tasksTexts[config.taskType];
+    switch (config.taskType) {
+      case "proofreading":
+        return (
+          "<span class='instruction__line'>" +
+            `${template.intro}` +
+         "</span>" +
+         "<span class='instruction__line'>" +
+            `${template.memTime + config.memOffset}` +
+          "</span>" +
+          "<span class='instruction__line'>" +
+            `${template.conclusion}` +
+          "</span>" +
+         " <span class='instruction__line'>" +
+            `${template.taskTime + config.taskOffset}` +
+          "</span>"
+      );
+      default:
+        return "Задание указанного типа не было найдено.";
+    }
   }
 }

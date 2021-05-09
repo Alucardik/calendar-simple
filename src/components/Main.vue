@@ -5,6 +5,7 @@
         <AdvancedCalendarView v-bind:selectedDate="curDate"
                               v-bind:period="curPeriod"
                               v-bind:eventsArray="workSpaceItems"/>
+        <TaskPopup v-bind:targetArray="this.pullSet[0]"/>
   </section>
 </template>
 
@@ -12,6 +13,7 @@
 import CalendarHeader from "./CalendarHeader";
 import SimpleCalendarView from "./SimpleCalendarView";
 import AdvancedCalendarView from "./AdvancedCalendarView";
+import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import getRandomPullSet from "../assets/scripts/utils/templates";
 
@@ -103,6 +105,7 @@ export default {
     CalendarHeader,
     AdvancedCalendarView,
     SimpleCalendarView,
+    TaskPopup
   },
 
   computed: {

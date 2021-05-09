@@ -1,11 +1,11 @@
 <template>
   <section class="page">
-    <p>
-      Instruction set will be here
-    </p>
-    <router-link to="/workspace">
-      Приступить к выполнению задания
-    </router-link>
+    <div class="instruction">
+      <p v-html="this.taskText" class="instruction__container"></p>
+      <router-link to="/workspace" class="instruction__link">
+        Приступить к выполнению задания
+      </router-link>
+    </div>
   </section>
 </template>
 
@@ -14,6 +14,10 @@ import shared from "../assets/scripts/utils/shared";
 
 export default {
   name: "Instruction",
+
+  created() {
+    this.taskText = shared.genTaskInstruction(this.sharedState);
+  },
 
   data: function() {
     return {
@@ -25,5 +29,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import url('../assets/pages/instruction.css');
 </style>

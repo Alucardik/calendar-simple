@@ -3,7 +3,8 @@
     <div class="header__info">
       <button type="button" class="header__button header__button_type_menu" v-on:click="triggerAPI"></button>
       <div class="header__project-name">
-        <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image">
+        <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image"
+             v-on:click="$router.push({path: '/'})">
         Календарь
       </div>
       <button type="button" class="header__button header__button_type_today" v-on:click="selectedDate = getCurDate(selectedDate)">

@@ -1,6 +1,7 @@
 .header__project-image {
-    width: 44px;
-    height: 40px;
-    margin-right: 6px;
-    object-fit: contain;
+  width: 44px;
+  height: 40px;
+  margin-right: 6px;
+  object-fit: contain;
+  cursor: pointer;
 }
