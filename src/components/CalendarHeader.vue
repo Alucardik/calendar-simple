@@ -1,17 +1,17 @@
 <template>
   <header class="header">
     <div class="header__info">
-      <button type="button" class="header__button header__button_type_menu" v-on:click="triggerAPI"></button>
+      <button type="button" class="header__button header__button_type_menu" @click="triggerAPI"></button>
       <div class="header__project-name">
         <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image"
-             v-on:click="$router.push({path: '/'})">
+             @click="$router.push({path: '/'})">
         Календарь
       </div>
-      <button type="button" class="header__button header__button_type_today" v-on:click="selectedDate = getCurDate(selectedDate)">
+      <button type="button" class="header__button header__button_type_today" @click="selectedDate = getCurDate(selectedDate)">
         Сегодня
       </button>
-      <button type="button" class="header__button header__button_type_change-per" v-on:click="selectedDate = decMonth(selectedDate)"></button>
-      <button type="button" class="header__button header__button_type_change-per" v-on:click="selectedDate = incMonth(selectedDate)"></button>
+      <button type="button" class="header__button header__button_type_change-per" @click="selectedDate = decMonth(selectedDate)"></button>
+      <button type="button" class="header__button header__button_type_change-per" @click="selectedDate = incMonth(selectedDate)"></button>
       <div class="header__date">
         {{ months[selectedDate.month - 1] }} {{ selectedDate.year }}
       </div>
@@ -19,11 +19,11 @@
 
     <nav class="header__settings">
       <button type="button" class="header__button header__button_type_options"
-      v-on:click="toggleDropdown">{{ calcPeriodName }} &#9660;</button>
+        @click="toggleDropdown">{{ calcPeriodName }} &#9660;</button>
       <div class="header__dropdown">
-        <span class="header__dropdown-elem" v-on:click="period.days = 1; toggleDropdown()">День</span>
-        <span class="header__dropdown-elem" v-on:click="period.days = 4; toggleDropdown()">4 Дня</span>
-        <span class="header__dropdown-elem" v-on:click="period.days = 7; toggleDropdown()">Неделя</span>
+        <span class="header__dropdown-elem" @click="period.days = 1; toggleDropdown()">День</span>
+        <span class="header__dropdown-elem" @click="period.days = 4; toggleDropdown()">4 Дня</span>
+        <span class="header__dropdown-elem" @click="period.days = 7; toggleDropdown()">Неделя</span>
       </div>
     </nav>
   </header>
@@ -44,7 +44,7 @@ export default {
       publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
     });
     this.spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
-    this.authId = "20d47430-9980-11eb-849a-795b78c342fc";
+    this.authId = "6cd51f80-b7f1-11eb-88ce-f3631f229918";
 
 
     this.getCurDate = shared.getCurDate;
@@ -74,7 +74,7 @@ export default {
   methods: {
     triggerAPI() {
       const csv = this.json2csv(this.stats);
-      console.log("STATS\n", csv);
+      // console.log("STATS\n", csv);
 
       this.pizzly
         .integration("google-sheets")
@@ -106,7 +106,7 @@ export default {
             return response.json();
           }
           // return response.status;
-          return new Promise.reject(response.status);
+          return Promise.reject(response.status);
         })
         .then((res) => {
           console.log(res);

@@ -63,6 +63,12 @@ export default {
     TableCell,
   },
 
+  props: {
+    eventsArray: Array,
+    selectedDate: Object,
+    period: Object,
+  },
+
   created() {
     // this.resizeTriggered = {windowRs: true};
     this.months = consts.months;
@@ -151,12 +157,6 @@ export default {
     //   // item.column = evt.target.column;
     // },
   },
-
-  props: {
-    eventsArray: Array,
-    selectedDate: Object,
-    period: Object,
-  }
 
 }
 </script>

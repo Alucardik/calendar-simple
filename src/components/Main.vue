@@ -1,11 +1,13 @@
 <template>
   <section class="page page_type_main">
-        <CalendarHeader v-bind:selectedDate="curDate" v-bind:period="curPeriod" :stats="draGnDropItems"/>
-        <SimpleCalendarView v-bind:selectedDate="curDate"/>
-        <AdvancedCalendarView v-bind:selectedDate="curDate"
-                              v-bind:period="curPeriod"
-                              v-bind:eventsArray="workSpaceItems"/>
-        <TaskPopup v-bind:targetArray="this.pullSet[0]"/>
+        <CalendarHeader :selectedDate="privateState.curDate"
+                        :period="privateState.curPeriod"
+                        :stats="privateState.workSpaceItems"/>
+        <SimpleCalendarView :selectedDate="privateState.curDate"/>
+        <AdvancedCalendarView :selectedDate="privateState.curDate"
+                              :period="privateState.curPeriod"
+                              :eventsArray="privateState.workSpaceItems"/>
+        <TaskPopup :targetArray="pullSet[0]" :isOpen="privateState.taskPopupOpened"/>
   </section>
 </template>
 
@@ -18,86 +20,30 @@ import shared from "../assets/scripts/utils/shared";
 import getRandomPullSet from "../assets/scripts/utils/templates";
 
 export default {
-  name: 'App',
+  name: 'Main',
 
   created() {
     this.pullSet = getRandomPullSet();
+    this.probesTaken = 1;
   },
 
   mounted() {
-    this.workSpaceItems = this.genWorkSpace(15, .5);
+    this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
+    setTimeout(() => {
+      this.privateState.taskPopupOpened = false;
+    }, this.sharedState.memOffset * 1000);
+    this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
   },
 
   data: function() {
     return {
-      curDate: shared.getCurDate({}),
-      curPeriod: {days: 7},
-      workSpaceItems: [],
-      draGnDropItems:  [
-        {
-          id: "it0",
-          row: 12,
-          column: 1,
-          duration: 15,
-          height: 1,
-          title: 'Item A',
-          firstRender: true,
-        },
-        {
-          id: "it1",
-          row: 7,
-          column: 1,
-          duration: 15,
-          height: 1,
-          title: 'Item B',
-          firstRender: true,
-        },
-        {
-          id: "it2",
-          row: 4,
-          column: 2,
-          duration: 15,
-          height: 1,
-          title: 'Item C',
-          firstRender: true,
-        },
-        {
-          id: "it3",
-          row: 4,
-          column: 1,
-          duration: 15,
-          height: 1,
-          title: 'Item D',
-          firstRender: true,
-        },
-        {
-          id: "it4",
-          row: 4,
-          column: 6,
-          duration: 15,
-          height: 1,
-          title: 'Item E',
-          firstRender: true,
-        },
-        {
-          id: "it5",
-          row: 6,
-          column: 5,
-          duration: 15,
-          height: 1,
-          title: 'Item F',
-          firstRender: true,
-        },
-        {
-          id: "it6",
-          row: 9,
-          column: 7,
-          duration: 15,
-          height: 1,
-          title: 'Item G',
-          firstRender: true,
-        },
-      ],
+      privateState: {
+        curDate: shared.getCurDate({}),
+        curPeriod: {days: 7},
+        workSpaceItems: [],
+        taskPopupOpened: true
+      },
+      sharedState: shared.sessionConfig
     }
   },
 
@@ -108,11 +54,25 @@ export default {
     TaskPopup
   },
 
-  computed: {
-  },
-
   methods: {
-    genDragItem(actName, pos, target=false) {
+    reinitWorkspace() {
+      ++this.probesTaken;
+      if (this.probesTaken > this.sharedState.numberOfProbes) {
+        console.log("Probes finished");
+        clearInterval(this.intervalId);
+        this.$router.push("/");
+        return;
+      }
+      console.log("taking probe:", this.probesTaken);
+      this.pullSet = getRandomPullSet();
+      this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
+      this.privateState.taskPopupOpened = true;
+      setTimeout(() => {
+        this.privateState.taskPopupOpened = false;
+      }, this.sharedState.memOffset * 1000);
+    },
+
+    genDragItem(actName, pos, isTarget=false) {
       return {
         id: `act${pos.row}${pos.column}`,
         row: pos.row,
@@ -121,14 +81,14 @@ export default {
         height: 1,
         title: actName,
         firstRender: true,
-        isTarget: target
+        isTarget: isTarget
       }
     },
 
     genWorkSpace(perColumn, targetPercentage) {
       const newWorkspace = [];
       console.log("TARGETS TO GENERATE:", Math.ceil(perColumn * targetPercentage));
-      for (let i = 0; i < this.curPeriod.days; ++i) {
+      for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
         let targetsLeft = Math.ceil(perColumn * targetPercentage);
         for (let j = 0; j < perColumn; ++j) {
           //checking slots left
@@ -157,7 +117,6 @@ export default {
           }
         }
       }
-
       return newWorkspace;
     }
   },
