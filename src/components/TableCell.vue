@@ -1,8 +1,14 @@
 <template>
-  <div class="drag-n-drop__drop-zone" v-on:drop="onDrop" v-on:dragover.prevent v-on:dragenter.prevent>
-    <div v-resize="{ callOnAdd: false }" class="drag-n-drop__drag-item" v-for="item in filteredItems" :key="item.id"
-         v-on:resize="onResize($event, item)" v-on:click="onClick"
-         :style="renderItem(item)" draggable="true" v-on:dragstart="onDragStart($event, item)">
+  <div class="drag-n-drop__drop-zone" @drop="onDrop" @dragover.prevent @dragenter.prevent>
+    <div v-resize="{ callOnAdd: false }"
+         class="drag-n-drop__drag-item"
+         v-for="item in filteredItems"
+         :key="item.id"
+         @resize="onResize($event, item)"
+         @click="onClick($event, item)"
+         :style="renderItem(item)"
+         draggable="true"
+         @dragstart="onDragStart($event, item)">
         {{ item.title }}
 <!--        <div class="drag-n-drop__resize-field"></div>-->
     </div>
@@ -20,6 +26,8 @@ export default {
   props: {
     items: Array,
     column: Number,
+    stats: Object,
+    probeNum: Number,
     // windowResize: Object
   },
 
@@ -62,7 +70,7 @@ export default {
       // this.timetable.forEach(cell => {
       //   cell.classList.add("date-cell__table-cell_on-top");
       // });
-      console.log("Picked at:", evt.target);
+      // console.log("Picked at:", evt.target);
       // this.$parent.moveCellsOnTop(true);
       // const chosenDiv = evt.target.closest(".date-cell__table-cell");
       // console.log("Picked at:", document.querySelectorAll(":hover"));
@@ -85,7 +93,7 @@ export default {
       evt.target.classList.add("drag-n-drop");
       const actCell = document.elementFromPoint(evt.clientX, evt.clientY);
       evt.target.classList.remove("drag-n-drop");
-      console.log("Dropped at:", actCell);
+      // console.log("Dropped at:", actCell);
 
       // this.timetable.forEach(cell => {
       //   cell.classList.remove("date-cell__table-cell_on-top");
@@ -123,8 +131,21 @@ export default {
       // this.$parent.moveCellsOnTop(false);
     },
 
-    onClick(evt) {
+    onClick(evt, item) {
+      const isTarget = item.isTarget;
+      if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
+        if (isTarget) {
+          --this.stats["Targets_struck"][this.probeNum - 1];
+        }
+        --this.stats["Total_words_struck"][this.probeNum - 1];
+      } else {
+        if (isTarget) {
+          ++this.stats["Targets_struck"][this.probeNum - 1];
+        }
+        ++this.stats["Total_words_struck"][this.probeNum - 1];
+      }
       evt.target.classList.toggle("drag-n-drop__drag-item_striked");
+      // console.log("Cell key", item);
     }
   }
 }

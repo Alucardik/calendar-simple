@@ -20,9 +20,9 @@ export default {
     // how many times it will be tested
     numberOfProbes: 3,
     // how much time (in seconds) does participant have for memorising
-    memOffset: 5,
+    memOffset: 2,
     // how much time (in seconds) does participant have for completing the task
-    taskOffset: 10
+    taskOffset: 15
   },
 
   genTaskInstruction: (config) => {

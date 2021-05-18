@@ -10,7 +10,9 @@
 
         <AdvancedCalendarView :selectedDate="privateState.curDate"
                               :period="privateState.curPeriod"
-                              :eventsArray="privateState.workSpaceItems"/>
+                              :eventsArray="privateState.workSpaceItems"
+                              :stats="statistics"
+                              :probeNum="probesTaken" />
 
         <TaskPopup :targetArray="pullSet[0]"
                    :isOpen="privateState.taskPopupOpened"/>
@@ -25,11 +27,13 @@ import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import constants from "../assets/scripts/utils/constants";
 import getRandomPullSet from "../assets/scripts/utils/templates";
+import sendStats from "../assets/scripts/utils/sheetsApi";
 
 export default {
   name: 'Main',
 
   created() {
+    this.json2csv = require('csvjson-json2csv');
     this.probesTaken = 1;
     this.probeStart = Date.now();
   },
@@ -66,10 +70,13 @@ export default {
   methods: {
     collectStat() {
       this.statistics["Probe"].push(this.probesTaken);
-      this.statistics["Time"].push(Math.floor(Date.now() - this.probeStart));
+      this.statistics["Time"].push(Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
     },
 
     initWorkspace() {
+      this.statistics["Total_words_struck"].push(0);
+      this.statistics["Total_targets"].push(0);
+      this.statistics["Targets_struck"].push(0);
       this.pullSet = getRandomPullSet();
       this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
       this.privateState.taskPopupOpened = true;
@@ -80,12 +87,15 @@ export default {
 
     reinitWorkspace() {
       this.collectStat();
+      console.log("NEW STAT", this.statistics);
       this.probeStart = Date.now();
       ++this.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
         clearInterval(this.intervalId);
         this.$router.push("/");
+        // sending data to Sheets API
+        sendStats(this.json2csv(this.statistics));
         return;
       }
       console.log("taking probe:", this.probesTaken);
@@ -112,10 +122,11 @@ export default {
     },
 
     genWorkSpace(perColumn, targetPercentage) {
-      const newWorkspace = [];
-      console.log("TARGETS TO GENERATE:", Math.ceil(perColumn * targetPercentage));
+      const newWorkspace = [], targetsToGen = Math.ceil(perColumn * targetPercentage);
+      console.log("TARGETS TO GENERATE:", targetsToGen);
       for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
-        let targetsLeft = Math.ceil(perColumn * targetPercentage);
+        this.statistics["Total_targets"][this.probesTaken - 1] += targetsToGen;
+        let targetsLeft = targetsToGen;
         for (let j = 0; j < perColumn; ++j) {
           //checking slots left
           // if too few left => generate only targets

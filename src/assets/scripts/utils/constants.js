@@ -13,8 +13,9 @@ const sampleStatObjects = {
   proofreading: {
     "Probe": [],
     "Time": [],
-    "Words_struck": [],
-    "Accuracy": [],
+    "Total_words_struck": [],
+    "Total_targets": [],
+    "Targets_struck": [],
   }
 };
 

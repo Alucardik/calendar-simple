@@ -1,10 +1,5 @@
 <template>
   <div class="main-space">
-<!--    <div class="timeline-column">-->
-<!--      <div class="timeline-column__cell" v-for="hour in 24" :key="hour">-->
-<!--        {{ hour - 1 }}:00-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="weekdays-row" :style="calcWeekRowAlignment">
       <div class="weekdays-row__cell" v-for="day in period.days" :key="`day${day}`">
         {{ weekdays[getDayOfTheWeek(selectedDate, day - 1)] }}
@@ -21,31 +16,8 @@
         </div>
       </div>
       <div class="date-cell__contents" v-for="column in period.days" :key="`column${column}`">
-        <TableCell :column="column" :items="eventsArray"/>
+        <TableCell :column="column" :items="eventsArray" :stats="stats" :probeNum="probeNum"/>
         <div class="date-cell__table-cell" v-for="_ in 24" :key="`column${column}cell${_}`" :row="_"></div>
-<!--        <TableCell v-for="_ in 2"-->
-<!--             :column="column"-->
-<!--             :row="_"-->
-<!--             :items="[draGnDropItems[_ - 1]]"-->
-<!--             :key="`column${column}cell${_}`">-->
-<!--&lt;!&ndash;          <div draggable="true" v-on:dragstart="onDragStart($event, draGnDropItems[_ - 1])">&ndash;&gt;-->
-<!--&lt;!&ndash;            {{ draGnDropItems[_ - 1].title }}&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </TableCell>-->
-<!--        <TableCell v-for="_ in 1"-->
-<!--             :column="column"-->
-<!--             :row="_ + 2"-->
-<!--             :items="[draGnDropItems[2]]"-->
-<!--             :key="`column${column}cell${_ + 2}`">-->
-<!--&lt;!&ndash;          <div draggable="true" v-on:dragstart="onDragStart($event, draGnDropItems[_ - 1])">&ndash;&gt;-->
-<!--&lt;!&ndash;            {{ draGnDropItems[_].title }}&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--        </TableCell>-->
-<!--        <TableCell v-for="_ in 21"-->
-<!--             :column="column"-->
-<!--             :row="_ + 3"-->
-<!--             :items="[]"-->
-<!--             :key="`column${column}cell${_ + 3}`"></TableCell>-->
       </div>
     </div>
   </div>
@@ -67,31 +39,14 @@ export default {
     eventsArray: Array,
     selectedDate: Object,
     period: Object,
+    stats: Object,
+    probeNum: Number,
   },
 
   created() {
-    // this.resizeTriggered = {windowRs: true};
     this.months = consts.months;
     this.weekdays = consts.weekdays;
     this.getDayOfTheWeek = shared.getDayOfTheWeek;
-  },
-
-  mounted() {
-    // window.addEventListener("resize", () => {
-    //   console.log("before window resize:", this.resizeTriggered.windowRs);
-    //   this.resizeTriggered.windowRs = true;
-    //   console.log("after window resize:", this.resizeTriggered.windowRs);
-    // })
-    // this.timetable = document.querySelectorAll(".date-cell__table-cell");
-  },
-
-  updated() {
-  },
-
-  data: function() {
-    return {
-
-    }
   },
 
   // пересчитываются каждый раз, когда меняются параметры, от которых зависит return
@@ -108,16 +63,6 @@ export default {
         "padding-left": this.period.days === 1 ? "40px" : "0"
       }
     },
-
-    // listOne () {
-    //   // console.log("List 1", this.draGnDropItems.filter(item => item.list === 1));
-    //   return this.draGnDropItems.filter(item => item.list === 1);
-    // },
-    //
-    // listTwo () {
-    //   // console.log("List 2", this.draGnDropItems.filter(item => item.list === 2));
-    //   return this.draGnDropItems.filter(item => item.list === 2);
-    // }
   },
 
   // статические функции

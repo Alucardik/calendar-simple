@@ -29,7 +29,7 @@ export default {
 
   computed: {
     checkPopup() {
-      console.log("check popup:", this.isOpen);
+      // console.log("check popup:", this.isOpen);
       return (this.isOpen) ? ("visibility: visible;") : ("");
     }
   },
