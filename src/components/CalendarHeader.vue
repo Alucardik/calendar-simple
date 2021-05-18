@@ -16,8 +16,10 @@
         {{ months[selectedDate.month - 1] }} {{ selectedDate.year }}
       </div>
     </div>
-
     <nav class="header__settings">
+      <div class="header__timer">
+        До конца пробы: {{sessionInfo.taskOffset - privateState.elapsed}} секунд
+      </div>
       <button type="button" class="header__button header__button_type_options"
         @click="toggleDropdown">{{ calcPeriodName }} &#9660;</button>
       <div class="header__dropdown">
@@ -25,6 +27,9 @@
         <span class="header__dropdown-elem" @click="period.days = 4; toggleDropdown()">4 Дня</span>
         <span class="header__dropdown-elem" @click="period.days = 7; toggleDropdown()">Неделя</span>
       </div>
+      <button type="button" class="header__button header__button_type_exit" @click="onInterrupt">
+        Завершить
+      </button>
     </nav>
   </header>
 </template>
@@ -45,18 +50,35 @@ export default {
     });
     this.spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
     this.authId = "6cd51f80-b7f1-11eb-88ce-f3631f229918";
-
-
     this.getCurDate = shared.getCurDate;
     this.months = consts.months;
+    this.sessionInfo = shared.sessionConfig;
   },
 
   mounted() {
     this.dropdown = document.querySelector(".header__dropdown");
+    this.timerId = setInterval(() => {
+      this.privateState.elapsed = Math.floor((Date.now() - this.probeStart) / 1000) - this.sessionInfo.memOffset;
+    }, 500);
   },
 
-  data: function () {
+  beforeUnmount() {
+    clearInterval(this.timerId);
+  },
+
+  props: {
+    selectedDate: Object,
+    period: Object,
+    stats: Array,
+    probeStart: Number,
+    onInterrupt: Function
+  },
+
+  data: function() {
     return {
+        privateState: {
+          elapsed: 0
+        }
     }
   },
 
@@ -139,12 +161,6 @@ export default {
       this.dropdown.classList.toggle("header__dropdown_visible");
     }
   },
-
-  props: {
-    selectedDate: Object,
-    period: Object,
-    stats: Array
-  }
 }
 </script>
 

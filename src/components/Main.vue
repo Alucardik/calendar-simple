@@ -1,13 +1,19 @@
 <template>
   <section class="page page_type_main">
-        <CalendarHeader :selectedDate="privateState.curDate"
+        <CalendarHeader :probeStart="probeStart"
+                        :selectedDate="privateState.curDate"
                         :period="privateState.curPeriod"
-                        :stats="privateState.workSpaceItems"/>
+                        :stats="privateState.workSpaceItems"
+                        :onInterrupt="handleProbeInterrupt.bind(this)"/>
+
         <SimpleCalendarView :selectedDate="privateState.curDate"/>
+
         <AdvancedCalendarView :selectedDate="privateState.curDate"
                               :period="privateState.curPeriod"
                               :eventsArray="privateState.workSpaceItems"/>
-        <TaskPopup :targetArray="pullSet[0]" :isOpen="privateState.taskPopupOpened"/>
+
+        <TaskPopup :targetArray="pullSet[0]"
+                   :isOpen="privateState.taskPopupOpened"/>
   </section>
 </template>
 
@@ -17,22 +23,25 @@ import SimpleCalendarView from "./SimpleCalendarView";
 import AdvancedCalendarView from "./AdvancedCalendarView";
 import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
+import constants from "../assets/scripts/utils/constants";
 import getRandomPullSet from "../assets/scripts/utils/templates";
 
 export default {
   name: 'Main',
 
   created() {
-    this.pullSet = getRandomPullSet();
     this.probesTaken = 1;
+    this.probeStart = Date.now();
   },
 
   mounted() {
-    this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
-    setTimeout(() => {
-      this.privateState.taskPopupOpened = false;
-    }, this.sharedState.memOffset * 1000);
+    this.statistics = constants.sampleStatObjects[this.sharedState.taskType];
+    this.initWorkspace();
     this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
+  },
+
+  beforeUnmount() {
+    clearInterval(this.intervalId);
   },
 
   data: function() {
@@ -55,7 +64,23 @@ export default {
   },
 
   methods: {
+    collectStat() {
+      this.statistics["Probe"].push(this.probesTaken);
+      this.statistics["Time"].push(Math.floor(Date.now() - this.probeStart));
+    },
+
+    initWorkspace() {
+      this.pullSet = getRandomPullSet();
+      this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
+      this.privateState.taskPopupOpened = true;
+      setTimeout(() => {
+        this.privateState.taskPopupOpened = false;
+      }, this.sharedState.memOffset * 1000);
+    },
+
     reinitWorkspace() {
+      this.collectStat();
+      this.probeStart = Date.now();
       ++this.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
@@ -64,12 +89,13 @@ export default {
         return;
       }
       console.log("taking probe:", this.probesTaken);
-      this.pullSet = getRandomPullSet();
-      this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
-      this.privateState.taskPopupOpened = true;
-      setTimeout(() => {
-        this.privateState.taskPopupOpened = false;
-      }, this.sharedState.memOffset * 1000);
+      this.initWorkspace();
+    },
+
+    handleProbeInterrupt() {
+      clearInterval(this.intervalId);
+      this.reinitWorkspace();
+      this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
     },
 
     genDragItem(actName, pos, isTarget=false) {

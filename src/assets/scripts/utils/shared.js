@@ -22,7 +22,7 @@ export default {
     // how much time (in seconds) does participant have for memorising
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
-    taskOffset: 5
+    taskOffset: 10
   },
 
   genTaskInstruction: (config) => {
@@ -41,6 +41,9 @@ export default {
           "</span>" +
          " <span class='instruction__line'>" +
             `${template.taskTime + config.taskOffset}` +
+          "</span>" +
+          " <span class='instruction__line'>" +
+          `Вам предстоит пройти задание ${config.numberOfProbes} раз(-а).` +
           "</span>"
       );
       default:

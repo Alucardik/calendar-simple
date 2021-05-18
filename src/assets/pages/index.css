@@ -12,8 +12,10 @@
 @import url(../styles/blocks/header/__button/_type/header__button_type_menu.css);
 @import url(../styles/blocks/header/__button/_type/header__button_type_options.css);
 @import url(../styles/blocks/header/__button/_type/header__button_type_today.css);
+@import url(../styles/blocks/header/__button/_type/header__button_type_exit.css);
 @import url(../styles/blocks/header/__project-name/header__project-name.css);
 @import url(../styles/blocks/header/__project-image/header__project-image.css);
+@import url(../styles/blocks/header/__timer/header__timer.css);
 @import url(../styles/blocks/header/__settings/header__settings.css);
 @import url(../styles/blocks/header/__dropdown/header__dropdown.css);
 @import url(../styles/blocks/header/__dropdown/_visible/header__dropdown_visible.css);
