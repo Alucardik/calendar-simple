@@ -11,11 +11,11 @@ const tasksTexts = {
 
 const sampleStatObjects = {
   proofreading: {
-    "Probe": [],
-    "Time": [],
-    "Total_words_struck": [],
-    "Total_targets": [],
-    "Targets_struck": [],
+    "Probe": 0,
+    "Time": 0,
+    "Total_words_struck": 0,
+    "Total_targets": 0,
+    "Targets_struck": 0,
   }
 };
 

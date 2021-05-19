@@ -39,7 +39,7 @@ export default {
     eventsArray: Array,
     selectedDate: Object,
     period: Object,
-    stats: Object,
+    stats: Array,
     probeNum: Number,
   },
 

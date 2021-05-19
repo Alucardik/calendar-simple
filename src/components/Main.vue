@@ -34,17 +34,20 @@ export default {
 
   created() {
     this.json2csv = require('csvjson-json2csv');
+    this.statistics = [];
+    this.pullSet = [];
     this.probesTaken = 1;
     this.probeStart = Date.now();
+    this.initWorkspace();
   },
 
   mounted() {
-    this.statistics = constants.sampleStatObjects[this.sharedState.taskType];
-    this.initWorkspace();
+    // this.initWorkspace();
     this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
   },
 
-  beforeUnmount() {
+  beforeDestroy() {
+    // console.log("UNMOUNTING!");
     clearInterval(this.intervalId);
   },
 
@@ -54,7 +57,12 @@ export default {
         curDate: shared.getCurDate({}),
         curPeriod: {days: 7},
         workSpaceItems: [],
-        taskPopupOpened: true
+        taskPopupOpened: true,
+        pullSet: [],
+        // probeStart: Date.now(),
+        // probesTaken: 1,
+        // probeStart: Date.now(),
+        // statistics: [],
       },
       sharedState: shared.sessionConfig
     }
@@ -69,15 +77,26 @@ export default {
 
   methods: {
     collectStat() {
-      this.statistics["Probe"].push(this.probesTaken);
-      this.statistics["Time"].push(Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
+      this.statistics[this.probesTaken - 1]["Time"] =
+        (Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
+      // console.log("COLLECTING STAT for", this.privateState.probesTaken);
+      // this.privateState.statistics[this.privateState.probesTaken - 1]["Probe"] = this.privateState.probesTaken;
+      // this.privateState.statistics[this.privateState.probesTaken - 1]["Time"] =
+      //   (Math.round(Math.floor(Date.now() - this.privateState.probeStart) / 1000 ) - this.sharedState.memOffset);
     },
 
     initWorkspace() {
-      this.statistics["Total_words_struck"].push(0);
-      this.statistics["Total_targets"].push(0);
-      this.statistics["Targets_struck"].push(0);
+      // this.statistics["Total_words_struck"].push(0);
+      // this.statistics["Total_targets"].push(0);
+      // this.statistics["Targets_struck"].push(0);
+      // console.log("CHECK AVAILABILITY", this.privateState.taskPopupOpened);
+      this.statistics.push(Object.create(constants.sampleStatObjects[this.sharedState.taskType]));
+      this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
       this.pullSet = getRandomPullSet();
+      // console.log("Stats before push", this.privateState.statistics);
+      // this.privateState.statistics.push(constants.sampleStatObjects[this.sharedState.taskType]);
+      // console.log("Stats after push", this.privateState.statistics);
+      // this.privateState.pullSet = getRandomPullSet();
       this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
       this.privateState.taskPopupOpened = true;
       setTimeout(() => {
@@ -89,16 +108,21 @@ export default {
       this.collectStat();
       console.log("NEW STAT", this.statistics);
       this.probeStart = Date.now();
+      // this.privateState.probeStart = Date.now();
       ++this.probesTaken;
+      // ++this.privateState.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
         clearInterval(this.intervalId);
         this.$router.push("/");
         // sending data to Sheets API
         sendStats(this.json2csv(this.statistics));
+        // console.log("CSV", this.json2csv(this.statistics, {output_csvjson_variant: true}));
+        // sendStats(this.json2csv(this.privateState.statistics));
         return;
       }
       console.log("taking probe:", this.probesTaken);
+      // console.log("taking probe:", this.privateState.probesTaken);
       this.initWorkspace();
     },
 
@@ -125,7 +149,8 @@ export default {
       const newWorkspace = [], targetsToGen = Math.ceil(perColumn * targetPercentage);
       console.log("TARGETS TO GENERATE:", targetsToGen);
       for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
-        this.statistics["Total_targets"][this.probesTaken - 1] += targetsToGen;
+        this.statistics[this.probesTaken - 1]["Total_targets"] += targetsToGen;
+        // this.privateState.statistics[this.privateState.probesTaken - 1]["Total_targets"] += targetsToGen;
         let targetsLeft = targetsToGen;
         for (let j = 0; j < perColumn; ++j) {
           //checking slots left
@@ -134,6 +159,8 @@ export default {
             newWorkspace.push(this.genDragItem(
               this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
               {column: i + 1, row: j + 1}, true));
+            // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
+            //   {column: i + 1, row: j + 1}, true));
             --targetsLeft;
             continue;
           }
@@ -145,12 +172,17 @@ export default {
             newWorkspace.push(this.genDragItem(
               this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
               {column: i + 1, row: j + 1}, true));
+              // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
+              // {column: i + 1, row: j + 1}, true));
             --targetsLeft;
           } else {
             // chosen distractor
             newWorkspace.push(this.genDragItem(
               this.pullSet[1][Math.floor(Math.random() * this.pullSet[1].length)],
               {column: i + 1, row: j + 1}));
+            // newWorkspace.push(this.genDragItem(
+            //   this.privateState.pullSet[1][Math.floor(Math.random() * this.privateState.pullSet[1].length)],
+            //   {column: i + 1, row: j + 1}));
           }
         }
       }

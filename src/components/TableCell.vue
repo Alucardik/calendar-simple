@@ -26,7 +26,7 @@ export default {
   props: {
     items: Array,
     column: Number,
-    stats: Object,
+    stats: Array,
     probeNum: Number,
     // windowResize: Object
   },
@@ -135,14 +135,14 @@ export default {
       const isTarget = item.isTarget;
       if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
         if (isTarget) {
-          --this.stats["Targets_struck"][this.probeNum - 1];
+          --this.stats[this.probeNum - 1]["Targets_struck"];
         }
-        --this.stats["Total_words_struck"][this.probeNum - 1];
+        --this.stats[this.probeNum - 1]["Total_words_struck"];
       } else {
         if (isTarget) {
-          ++this.stats["Targets_struck"][this.probeNum - 1];
+          ++this.stats[this.probeNum - 1]["Targets_struck"];
         }
-        ++this.stats["Total_words_struck"][this.probeNum - 1];
+        ++this.stats[this.probeNum - 1]["Total_words_struck"];
       }
       evt.target.classList.toggle("drag-n-drop__drag-item_striked");
       // console.log("Cell key", item);
