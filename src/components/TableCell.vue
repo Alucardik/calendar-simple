@@ -28,12 +28,11 @@ export default {
     column: Number,
     stats: Array,
     probeNum: Number,
-    // windowResize: Object
   },
 
   computed: {
     filteredItems() {
-      return this.items.filter(item => item.column === this.column);
+      return this.items.filter((item) => (item.column === this.column));
     },
   },
 

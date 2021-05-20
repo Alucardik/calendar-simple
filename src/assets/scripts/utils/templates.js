@@ -1,3 +1,5 @@
+// TODO add all pulls and test block by block
+
 const targetPulls = [
   ["тренировка", "звонок", "отдых"],
   ["покупка", "свидание", "встреча"],

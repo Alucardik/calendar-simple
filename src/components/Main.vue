@@ -77,6 +77,11 @@ export default {
 
   methods: {
     collectStat() {
+      // TODO add click array
+      // TODO add by word target strikes separation (strikes per target word)
+      // TODO add separate button / page for send data confirmation
+      // TODO ask about storing data to local storage in case api is unavailable
+      // TODO ask about saving personal data
       this.statistics[this.probesTaken - 1]["Time"] =
         (Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
       // console.log("COLLECTING STAT for", this.privateState.probesTaken);
@@ -146,6 +151,7 @@ export default {
     },
 
     genWorkSpace(perColumn, targetPercentage) {
+      // TODO remake generation
       const newWorkspace = [], targetsToGen = Math.ceil(perColumn * targetPercentage);
       console.log("TARGETS TO GENERATE:", targetsToGen);
       for (let i = 0; i < this.privateState.curPeriod.days; ++i) {

@@ -17,9 +17,9 @@
       </div>
     </div>
     <nav class="header__settings">
-      <div class="header__timer">
-        До конца пробы: {{sessionInfo.taskOffset - privateState.elapsed}} секунд
-      </div>
+<!--      <div class="header__timer">-->
+<!--        До конца пробы: {{sessionInfo.taskOffset - privateState.elapsed}} секунд-->
+<!--      </div>-->
       <button type="button" class="header__button header__button_type_options"
         @click="toggleDropdown">{{ calcPeriodName }} &#9660;</button>
       <div class="header__dropdown">
