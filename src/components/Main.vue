@@ -47,7 +47,6 @@ export default {
   },
 
   beforeDestroy() {
-    // console.log("UNMOUNTING!");
     clearInterval(this.intervalId);
   },
 
@@ -122,8 +121,6 @@ export default {
         this.$router.push("/");
         // sending data to Sheets API
         sendStats(this.json2csv(this.statistics));
-        // console.log("CSV", this.json2csv(this.statistics, {output_csvjson_variant: true}));
-        // sendStats(this.json2csv(this.privateState.statistics));
         return;
       }
       console.log("taking probe:", this.probesTaken);
@@ -146,7 +143,8 @@ export default {
         height: 1,
         title: actName,
         firstRender: true,
-        isTarget: isTarget
+        isTarget: isTarget,
+        isStriked: false
       }
     },
 

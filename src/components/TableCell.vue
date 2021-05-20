@@ -1,8 +1,8 @@
 <template>
   <div class="drag-n-drop__drop-zone" @drop="onDrop" @dragover.prevent @dragenter.prevent>
-    <div v-resize="{ callOnAdd: false }"
-         class="drag-n-drop__drag-item"
-         v-for="item in filteredItems"
+    <div v-for="item in filteredItems"
+         v-resize="{ callOnAdd: false }"
+         :class="`drag-n-drop__drag-item ${item.isStriked && 'drag-n-drop__drag-item_striked'}`"
          :key="item.id"
          @resize="onResize($event, item)"
          @click="onClick($event, item)"
@@ -131,8 +131,21 @@ export default {
     },
 
     onClick(evt, item) {
-      const isTarget = item.isTarget;
-      if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
+      const {isTarget, isStriked} = item;
+
+      // if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
+      //   if (isTarget) {
+      //     --this.stats[this.probeNum - 1]["Targets_struck"];
+      //   }
+      //   --this.stats[this.probeNum - 1]["Total_words_struck"];
+      // } else {
+      //   if (isTarget) {
+      //     ++this.stats[this.probeNum - 1]["Targets_struck"];
+      //   }
+      //   ++this.stats[this.probeNum - 1]["Total_words_struck"];
+      // }
+      // evt.target.classList.toggle("drag-n-drop__drag-item_striked");
+      if (isStriked) {
         if (isTarget) {
           --this.stats[this.probeNum - 1]["Targets_struck"];
         }
@@ -143,7 +156,7 @@ export default {
         }
         ++this.stats[this.probeNum - 1]["Total_words_struck"];
       }
-      evt.target.classList.toggle("drag-n-drop__drag-item_striked");
+      item.isStriked = !item.isStriked;
       // console.log("Cell key", item);
     }
   }
