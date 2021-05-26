@@ -48,6 +48,7 @@ export default {
 
   beforeDestroy() {
     clearInterval(this.intervalId);
+    window.removeEventListener("click", this.recordClicks);
   },
 
   data: function() {
@@ -75,8 +76,12 @@ export default {
   },
 
   methods: {
+    recordClicks() {
+      this.statistics[this.probesTaken - 1]["Clicks"].push(Math.floor((Date.now() - this.probeStart) / 1000)
+        - this.sharedState.memOffset);
+    },
+
     collectStat() {
-      // TODO add clicks array (seconds since probe start)
       // TODO add by word target strikes separation (strikes per target word)
       // TODO add separate button / page for send data confirmation
       // TODO ask about storing data to local storage in case api is unavailable
@@ -94,8 +99,11 @@ export default {
       // this.statistics["Total_targets"].push(0);
       // this.statistics["Targets_struck"].push(0);
       // console.log("CHECK AVAILABILITY", this.privateState.taskPopupOpened);
+      window.removeEventListener("click", this.recordClicks);
       this.statistics.push(Object.create(constants.sampleStatObjects[this.sharedState.taskType]));
       this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
+      // initialise empty clicks time array
+      this.statistics[this.probesTaken - 1]["Clicks"] = [];
       this.pullSet = getRandomPullSet();
       // console.log("Stats before push", this.privateState.statistics);
       // this.privateState.statistics.push(constants.sampleStatObjects[this.sharedState.taskType]);
@@ -105,6 +113,7 @@ export default {
       this.privateState.taskPopupOpened = true;
       setTimeout(() => {
         this.privateState.taskPopupOpened = false;
+        window.addEventListener("click", this.recordClicks);
       }, this.sharedState.memOffset * 1000);
     },
 

@@ -16,6 +16,7 @@ const sampleStatObjects = {
     "Total_words_struck": 0,
     "Total_targets": 0,
     "Targets_struck": 0,
+    "Clicks": 0
   }
 };
 
