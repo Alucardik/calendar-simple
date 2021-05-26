@@ -24,7 +24,7 @@ export default {
     // what type of task will be tested
     taskType: "proofreading",
     // how many times it will be tested
-    numberOfProbes: 1,
+    numberOfProbes: 3,
     // how much time (in seconds) does participant have for memorising
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task

@@ -27,7 +27,7 @@ import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import constants from "../assets/scripts/utils/constants";
 import getRandomPullSet from "../assets/scripts/utils/templates";
-// import sendStats from "../assets/scripts/utils/sheetsApi";
+import sendStats from "../assets/scripts/utils/sheetsApi";
 
 export default {
   name: 'Main',
@@ -79,7 +79,6 @@ export default {
     collectStat() {
       // TODO add separate button / page for successful send stats request confirmation
       // TODO ask about storing data to local storage in case api is unavailable
-      // TODO ask about saving personal data
       this.statistics[this.probesTaken - 1]["Time"] =
         (Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
       // console.log("COLLECTING STAT for", this.privateState.probesTaken);
@@ -121,12 +120,19 @@ export default {
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
         console.log("Collected Info");
-        console.log(this.json2csv(shared.personalInfo));
         clearInterval(this.intervalId);
         this.$router.push("/");
         // sending data to Sheets API
-        // sendStats(this.json2csv(this.statistics));
-        console.log(this.json2csv(this.statistics));
+        Promise.all([sendStats(this.json2csv(shared.personalInfo), 0),
+        sendStats(this.json2csv(this.statistics), 916952360)])
+        .then(() => {
+          window.alert("All Data was successfully retrieved");
+        })
+        .catch((errs) => {
+          window.alert(`API encountered errors with status:\n${errs}`);
+        });
+
+        // console.log(this.json2csv(this.statistics));
         return;
       }
       console.log("taking probe:", this.probesTaken);

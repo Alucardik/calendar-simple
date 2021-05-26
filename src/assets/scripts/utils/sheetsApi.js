@@ -5,10 +5,11 @@ const pizzly = new Pizzly({
   publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
 });
 const spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
-const authId = "6cd51f80-b7f1-11eb-88ce-f3631f229918";
+const authId = "f9580380-be2e-11eb-8bd0-9ff158aa406e";
 
-const sendStats = (csvData) => {
-  pizzly.integration("google-sheets")
+// TODO append values with ranges []: https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
+const sendStats = (csvData, sheetId) => {
+  return pizzly.integration("google-sheets")
     .auth(authId)
     .post(`${spreadsheetId}:batchUpdate`,{
       body: JSON.stringify({
@@ -16,7 +17,7 @@ const sendStats = (csvData) => {
           {
             "pasteData": {
               "coordinate": {
-                "sheetId": 0,
+                "sheetId": sheetId,
                 "rowIndex": 0,
                 "columnIndex": 0
               },
@@ -33,17 +34,10 @@ const sendStats = (csvData) => {
     })
     .then((response) => {
       if (response.ok) {
-        window.alert("Data was successfully retrieved");
         return response.json();
       }
       // return response.status;
       return Promise.reject(response.status);
-    })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch(err => {
-      window.alert(`API encountered error with status:\n${err}`);
     });
 }
 
