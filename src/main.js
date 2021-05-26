@@ -3,7 +3,7 @@ import App from './App.vue';
 import Home from "./components/Home";
 import Main from "./components/Main";
 import Instruction from "./components/Instruction";
-import Config from "./components/Config";
+import PersonalInfoForm from "./components/PersonalInfoForm";
 
 Vue.config.productionTip = false;
 
@@ -24,8 +24,8 @@ const routes = [
     component: Instruction
   },
   {
-    path: "/config",
-    component: Config
+    path: "/auth",
+    component: PersonalInfoForm
   },
   {
     path: "*",

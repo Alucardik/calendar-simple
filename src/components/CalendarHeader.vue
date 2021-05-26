@@ -3,8 +3,7 @@
     <div class="header__info">
       <button type="button" class="header__button header__button_type_menu"></button>
       <div class="header__project-name">
-        <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image"
-             @click="$router.push({path: '/'})">
+        <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image">
         Календарь
       </div>
       <button type="button" class="header__button header__button_type_today" @click="selectedDate = getCurDate(selectedDate)">

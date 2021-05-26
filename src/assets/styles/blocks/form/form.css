@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 150px auto auto;
+  width: 350px;
+  height: 550px;
+  border-radius: 10px;
+  border: solid darkgray 2px;
+  font-family: "Open Sans";
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}

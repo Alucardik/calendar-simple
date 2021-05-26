@@ -42,7 +42,6 @@ export default {
   },
 
   mounted() {
-    // this.initWorkspace();
     this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
   },
 
@@ -59,10 +58,6 @@ export default {
         workSpaceItems: [],
         taskPopupOpened: true,
         pullSet: [],
-        // probeStart: Date.now(),
-        // probesTaken: 1,
-        // probeStart: Date.now(),
-        // statistics: [],
       },
       sharedState: shared.sessionConfig
     }
@@ -82,7 +77,6 @@ export default {
     },
 
     collectStat() {
-      // TODO add by word target strikes separation (strikes per target word)
       // TODO add separate button / page for successful send stats request confirmation
       // TODO ask about storing data to local storage in case api is unavailable
       // TODO ask about saving personal data
