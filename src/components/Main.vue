@@ -83,7 +83,7 @@ export default {
 
     collectStat() {
       // TODO add by word target strikes separation (strikes per target word)
-      // TODO add separate button / page for send data confirmation
+      // TODO add separate button / page for successful send stats request confirmation
       // TODO ask about storing data to local storage in case api is unavailable
       // TODO ask about saving personal data
       this.statistics[this.probesTaken - 1]["Time"] =
@@ -144,7 +144,7 @@ export default {
       this.intervalId = setInterval(this.reinitWorkspace, (this.sharedState.memOffset + this.sharedState.taskOffset) * 1000);
     },
 
-    genDragItem(actName, pos, isTarget=false) {
+    genDragItem(actName, pos, targetNum=-1, isTarget=false) {
       return {
         id: `act${pos.row}${pos.column}`,
         row: pos.row,
@@ -154,6 +154,7 @@ export default {
         title: actName,
         firstRender: true,
         isTarget: isTarget,
+        targetNum: targetNum,
         isStriked: false
       }
     },
@@ -169,9 +170,10 @@ export default {
           //checking slots left
           // if too few left => generate only targets
           if (perColumn - j === targetsLeft) {
+            const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
             newWorkspace.push(this.genDragItem(
-              this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
-              {column: i + 1, row: j + 1}, true));
+              this.pullSet[0][chosenPos],
+              {column: i + 1, row: j + 1}, chosenPos, true));
             // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
             //   {column: i + 1, row: j + 1}, true));
             --targetsLeft;
@@ -181,10 +183,11 @@ export default {
           // if there are spare slots =>
           // choose targer or distractor randomly
           if (Math.random() > 0.5 && targetsLeft) {
+            const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
             // chosen target if any are left
             newWorkspace.push(this.genDragItem(
-              this.pullSet[0][Math.floor(Math.random() * this.pullSet[0].length)],
-              {column: i + 1, row: j + 1}, true));
+              this.pullSet[0][chosenPos],
+              {column: i + 1, row: j + 1}, chosenPos,true));
               // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
               // {column: i + 1, row: j + 1}, true));
             --targetsLeft;

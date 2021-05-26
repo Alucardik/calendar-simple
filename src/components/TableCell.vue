@@ -131,7 +131,7 @@ export default {
     },
 
     onClick(evt, item) {
-      const {isTarget, isStriked} = item;
+      const {isTarget, isStriked, targetNum} = item;
 
       // if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
       //   if (isTarget) {
@@ -148,11 +148,13 @@ export default {
       if (isStriked) {
         if (isTarget) {
           --this.stats[this.probeNum - 1]["Targets_struck"];
+          --this.stats[this.probeNum - 1][`Target${targetNum + 1}_struck`];
         }
         --this.stats[this.probeNum - 1]["Total_words_struck"];
       } else {
         if (isTarget) {
           ++this.stats[this.probeNum - 1]["Targets_struck"];
+          ++this.stats[this.probeNum - 1][`Target${targetNum + 1}_struck`];
         }
         ++this.stats[this.probeNum - 1]["Total_words_struck"];
       }

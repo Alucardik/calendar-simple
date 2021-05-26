@@ -14,6 +14,9 @@ const sampleStatObjects = {
     "Probe": 0,
     "Time": 0,
     "Total_words_struck": 0,
+    "Target1_struck": 0,
+    "Target2_struck": 0,
+    "Target3_struck": 0,
     "Total_targets": 0,
     "Targets_struck": 0,
     "Clicks": 0
