@@ -120,6 +120,8 @@ export default {
       // ++this.privateState.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
+        console.log("Collected Info");
+        console.log(this.json2csv(shared.personalInfo));
         clearInterval(this.intervalId);
         this.$router.push("/");
         // sending data to Sheets API

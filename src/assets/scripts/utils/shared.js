@@ -14,6 +14,12 @@ export default {
       return someDay.getDay()
   },
 
+  personalInfo: {
+    "Name": "",
+    "Age": "",
+    "Gender": ""
+  },
+
   sessionConfig: {
     // what type of task will be tested
     taskType: "proofreading",

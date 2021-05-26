@@ -24,12 +24,12 @@ const routes = [
     component: Instruction
   },
   {
-    path: "/auth",
-    component: PersonalInfoForm
+    path: "/home",
+    component: Home
   },
   {
     path: "*",
-    component: Home
+    component: PersonalInfoForm
   },
 ];
 

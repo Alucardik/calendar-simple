@@ -1,0 +1,15 @@
+@import url(../styles/vendor/normalize.css);
+@import url(../styles/blocks/utility.css);
+@import url(../fonts/open-sans.css);
+
+@import url(../styles/blocks/page/page.css);
+
+@import url(../styles/blocks/home/__welcome/home__welcome.css);
+
+@import url(../styles/blocks/form/form.css);
+@import url(../styles/blocks/form/__title/form__title.css);
+@import url(../styles/blocks/form/__fieldset/form__fieldset.css);
+@import url(../styles/blocks/form/__field/form__field.css);
+@import url(../styles/blocks/form/__input/form__input.css);
+@import url(../styles/blocks/form/__input/_type/form__input_type_select.css);
+@import url(../styles/blocks/form/__submit-btn/form__submit-btn.css);
