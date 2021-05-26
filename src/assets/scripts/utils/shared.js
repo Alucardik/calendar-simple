@@ -28,7 +28,9 @@ export default {
     // how much time (in seconds) does participant have for memorising
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
-    taskOffset: 60
+    taskOffset: 60,
+    // when signal for switching should be heard
+    signalOffset: 15
   },
 
   genTaskInstruction: (config) => {
