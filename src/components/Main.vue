@@ -27,7 +27,7 @@ import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import constants from "../assets/scripts/utils/constants";
 import getRandomPullSet from "../assets/scripts/utils/templates";
-import sendStats from "../assets/scripts/utils/sheetsApi";
+// import sendStats from "../assets/scripts/utils/sheetsApi";
 
 export default {
   name: 'Main',
@@ -76,7 +76,7 @@ export default {
 
   methods: {
     collectStat() {
-      // TODO add click array
+      // TODO add clicks array (seconds since probe start)
       // TODO add by word target strikes separation (strikes per target word)
       // TODO add separate button / page for send data confirmation
       // TODO ask about storing data to local storage in case api is unavailable
@@ -120,7 +120,8 @@ export default {
         clearInterval(this.intervalId);
         this.$router.push("/");
         // sending data to Sheets API
-        sendStats(this.json2csv(this.statistics));
+        // sendStats(this.json2csv(this.statistics));
+        console.log(this.json2csv(this.statistics));
         return;
       }
       console.log("taking probe:", this.probesTaken);
@@ -151,7 +152,6 @@ export default {
     genWorkSpace(perColumn, targetPercentage) {
       // TODO remake generation
       const newWorkspace = [], targetsToGen = Math.ceil(perColumn * targetPercentage);
-      console.log("TARGETS TO GENERATE:", targetsToGen);
       for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
         this.statistics[this.probesTaken - 1]["Total_targets"] += targetsToGen;
         // this.privateState.statistics[this.privateState.probesTaken - 1]["Total_targets"] += targetsToGen;

@@ -1,7 +1,7 @@
 <template>
-  <header class="header">
+  <header class="header" >
     <div class="header__info">
-      <button type="button" class="header__button header__button_type_menu" @click="triggerAPI"></button>
+      <button type="button" class="header__button header__button_type_menu"></button>
       <div class="header__project-name">
         <img src="../assets/images/calendar-image.svg" alt="App logo" class="header__project-image"
              @click="$router.push({path: '/'})">
@@ -37,18 +37,11 @@
 <script>
 import consts from "@/assets/scripts/utils/constants";
 import shared from "@/assets/scripts/utils/shared";
-// import Pizzly from 'pizzly-js';
 
 export default {
   name: "CalendarHeader",
 
   created() {
-    // this.pizzly = new Pizzly({
-    //   host: "https://psyc-calendar.herokuapp.com/",
-    //   publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
-    // });
-    // this.spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
-    // this.authId = "6cd51f80-b7f1-11eb-88ce-f3631f229918";
     this.getCurDate = shared.getCurDate;
     this.months = consts.months;
     this.sessionInfo = shared.sessionConfig;
@@ -61,7 +54,7 @@ export default {
     }, 500);
   },
 
-  beforeUnmount() {
+  beforeDestroy() {
     clearInterval(this.timerId);
   },
 
@@ -93,49 +86,6 @@ export default {
   },
 
   methods: {
-    triggerAPI() {
-      // const csv = this.json2csv(this.stats);
-      //
-      // this.pizzly
-      //   .integration("google-sheets")
-      //   .auth(this.authId)
-      //   .post(`${this.spreadsheetId}:batchUpdate`,{
-      //     body: JSON.stringify({
-      //       "requests": [
-      //         {
-      //           "pasteData": {
-      //             "coordinate": {
-      //               "sheetId": 0,
-      //               "rowIndex": 0,
-      //               "columnIndex": 0
-      //             },
-      //             "data": csv,
-      //             "type": "PASTE_VALUES",
-      //             "delimiter": ",",
-      //           }
-      //         }
-      //       ],
-      //       "includeSpreadsheetInResponse": false,
-      //       "responseRanges": [],
-      //       "responseIncludeGridData": false
-      //     })
-      //   })
-      //   .then((response) => {
-      //     if (response.ok) {
-      //       window.alert("Data was successfully retrieved");
-      //       return response.json();
-      //     }
-      //     // return response.status;
-      //     return Promise.reject(response.status);
-      //   })
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch(err => {
-      //     window.alert(`API encountered error with status:\n${err}`);
-      //   });
-    },
-
     decMonth(date) {
       date.month -= 1;
       if (!date.month) {

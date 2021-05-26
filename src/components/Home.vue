@@ -8,9 +8,9 @@
       <router-link to="/about" class="home__link">
         Начать сессию
       </router-link>
-      <router-link to="/config" class="home__link">
-        Настройки сессии
-      </router-link>
+<!--      <router-link to="/config" class="home__link">-->
+<!--        Настройки сессии-->
+<!--      </router-link>-->
     </div>
   </section>
 </template>

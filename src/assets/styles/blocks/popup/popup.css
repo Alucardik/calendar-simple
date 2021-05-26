@@ -4,7 +4,8 @@
   height: 100%;
   top: 0;
   z-index: 10;
-  background-color: antiquewhite;
+  background-color: white;
   display: flex;
   visibility: hidden;
+  font-size: 36px;
 }
