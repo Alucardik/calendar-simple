@@ -1,10 +1,9 @@
 <template>
   <div class="drag-n-drop__drop-zone" @drop="onDrop" @dragover.prevent @dragenter.prevent>
+<!--v-resize="{ callOnAdd: false }"  @resize="onResize($event, item)" -->
     <div v-for="item in filteredItems"
-         v-resize="{ callOnAdd: false }"
          :class="`drag-n-drop__drag-item ${item.isStriked && 'drag-n-drop__drag-item_striked'}`"
          :key="item.id"
-         @resize="onResize($event, item)"
          @click="onClick($event, item)"
          :style="renderItem(item)"
          draggable="true"
@@ -38,29 +37,17 @@ export default {
 
   methods: {
     onResize(evt, item) {
-      // console.log(this.windowResize.windowRs)
       if (item.firstRender) {
         item.firstRender = false;
         return;
       }
-
-      // if (this.windowResize.windowRs) {
-      //   this.windowResize.windowRs = false;
-      //   return;
-      // }
-
-
-      // item.height = Math.round(evt.detail.height / 12.33);
-      // item.duration += 15;
-      // console.log("RESIZED");
-      // console.log(evt.detail.height);
-      // console.log(item.height);
       item.height = evt.detail.height;
       item.firstRender = true;
     },
 
     renderItem(item) {
       return {"top": `calc(100% / 24 * ${item.row - 1}`,
+              "margin-top": `calc(${item.half - 1} * 25px)`,
               "height": `${item.height}px`,
               "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"};
     },
@@ -119,14 +106,11 @@ export default {
       // item.column = evt.target.column;
       // console.log("CELL", actCell.attributes.row.textContent)
       const itemID = evt.dataTransfer.getData('itemID');
-      const item = this.items.find(it => it.id === itemID);
+      const item = this.items.find((it) => it.id === itemID);
       item.column = this.column;
       item.row = parseInt(actCell.attributes["row"].textContent);
+      item.half = parseInt(actCell.attributes["half"].textContent);
       // item.firstRender = true;
-      // let i = 0;
-      // do {
-      //
-      // }
       // this.$parent.moveCellsOnTop(false);
     },
 

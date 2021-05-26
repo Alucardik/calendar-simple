@@ -24,11 +24,11 @@ export default {
     // what type of task will be tested
     taskType: "proofreading",
     // how many times it will be tested
-    numberOfProbes: 3,
+    numberOfProbes: 1,
     // how much time (in seconds) does participant have for memorising
-    memOffset: 5,
+    memOffset: 1,
     // how much time (in seconds) does participant have for completing the task
-    taskOffset: 60,
+    taskOffset: 6000,
     // when signal for switching should be heard
     signalOffset: 15
   },

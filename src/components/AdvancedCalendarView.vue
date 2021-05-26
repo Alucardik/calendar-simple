@@ -17,7 +17,14 @@
       </div>
       <div class="date-cell__contents" v-for="column in period.days" :key="`column${column}`">
         <TableCell :column="column" :items="eventsArray" :stats="stats" :probeNum="probeNum"/>
-        <div class="date-cell__table-cell" v-for="_ in 24" :key="`column${column}cell${_}`" :row="_"></div>
+        <div class="date-cell__table-cell"
+             v-for="_ in 24"
+             :key="`column${column}cell${(_ + _ % 2) / 2}half${-(_ % 2) + 2}`"
+             :row="(_ + _ % 2) / 2" :half="-(_ % 2) + 2"/>
+        <div class="date-cell__table-cell"
+             v-for="_ in 24"
+             :key="`column${column}cell${(_ + _ % 2) / 2 + 12}half${-(_ % 2) + 2}`"
+             :row="(_ + _ % 2) / 2 + 12" :half="-(_ % 2) + 2"/>
       </div>
     </div>
   </div>

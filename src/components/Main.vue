@@ -151,6 +151,7 @@ export default {
         id: `act${pos.row}${pos.column}`,
         row: pos.row,
         column: pos.column,
+        half: pos.half,
         duration: 15,
         height: 1,
         title: actName,
@@ -175,7 +176,7 @@ export default {
             const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
             newWorkspace.push(this.genDragItem(
               this.pullSet[0][chosenPos],
-              {column: i + 1, row: j + 1}, chosenPos, true));
+              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos, true));
             // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
             //   {column: i + 1, row: j + 1}, true));
             --targetsLeft;
@@ -189,7 +190,7 @@ export default {
             // chosen target if any are left
             newWorkspace.push(this.genDragItem(
               this.pullSet[0][chosenPos],
-              {column: i + 1, row: j + 1}, chosenPos,true));
+              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos,true));
               // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
               // {column: i + 1, row: j + 1}, true));
             --targetsLeft;
@@ -197,7 +198,7 @@ export default {
             // chosen distractor
             newWorkspace.push(this.genDragItem(
               this.pullSet[1][Math.floor(Math.random() * this.pullSet[1].length)],
-              {column: i + 1, row: j + 1}));
+              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}));
             // newWorkspace.push(this.genDragItem(
             //   this.privateState.pullSet[1][Math.floor(Math.random() * this.privateState.pullSet[1].length)],
             //   {column: i + 1, row: j + 1}));
