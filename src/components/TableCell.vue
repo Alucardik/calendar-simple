@@ -79,7 +79,6 @@ export default {
       evt.target.classList.add("drag-n-drop");
       const actCell = document.elementFromPoint(evt.clientX, evt.clientY);
       evt.target.classList.remove("drag-n-drop");
-      // console.log("Dropped at:", actCell);
 
       // this.timetable.forEach(cell => {
       //   cell.classList.remove("date-cell__table-cell_on-top");
@@ -105,11 +104,13 @@ export default {
       // item.row = evt.target.row;
       // item.column = evt.target.column;
       // console.log("CELL", actCell.attributes.row.textContent)
-      const itemID = evt.dataTransfer.getData('itemID');
-      const item = this.items.find((it) => it.id === itemID);
-      item.column = this.column;
-      item.row = parseInt(actCell.attributes["row"].textContent);
-      item.half = parseInt(actCell.attributes["half"].textContent);
+      if (actCell.classList.contains("date-cell__table-cell")) {
+        const itemID = evt.dataTransfer.getData('itemID');
+        const item = this.items.find((it) => it.id === itemID);
+        item.column = this.column;
+        item.row = parseInt(actCell.attributes["row"].textContent);
+        item.half = parseInt(actCell.attributes["half"].textContent);
+      }
       // item.firstRender = true;
       // this.$parent.moveCellsOnTop(false);
     },
