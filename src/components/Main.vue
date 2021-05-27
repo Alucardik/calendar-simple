@@ -14,7 +14,7 @@
                               :stats="statistics"
                               :probeNum="probesTaken" />
 
-        <TaskPopup :targetArray="pullSet[0]"
+        <TaskPopup :targetArray="pullSet[curPullInd].pull"
                    :isOpen="privateState.taskPopupOpened"/>
     <button type="button" class="header__button header__button_type_exit"
             style="width: 120px;"
@@ -31,7 +31,8 @@ import AdvancedCalendarView from "./AdvancedCalendarView";
 import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import constants from "../assets/scripts/utils/constants";
-import getRandomPullSet from "../assets/scripts/utils/templates";
+import * as pullsData from "../assets/scripts/utils/templates";
+// import getRandomPullSet from "../assets/scripts/utils/templates";
 import sendStats from "../assets/scripts/utils/sheetsApi";
 
 export default {
@@ -39,8 +40,10 @@ export default {
 
   created() {
     this.json2csv = require('csvjson-json2csv');
+    this.sparePositions = [];
     this.statistics = [];
-    this.pullSet = [];
+    this.pullSet = Object.assign(pullsData.targetPulls);
+    this.curPullInd = -1;
     this.probesTaken = 1;
     this.probeStart = Date.now();
     this.initWorkspace();
@@ -102,12 +105,18 @@ export default {
       this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
       // initialise empty clicks time array
       this.statistics[this.probesTaken - 1]["Clicks"] = [];
-      this.pullSet = getRandomPullSet();
+      if (this.curPullInd !== -1) {
+        // delete selected pull from available ones
+        this.pullSet.splice(this.curPullInd, 1);
+      }
+      this.curPullInd = Math.floor(Math.random() * this.pullSet.length);
+      console.log("INDEX", this.curPullInd);
+      this.sparePositions = pullsData.genPositions();
       // console.log("Stats before push", this.privateState.statistics);
       // this.privateState.statistics.push(constants.sampleStatObjects[this.sharedState.taskType]);
       // console.log("Stats after push", this.privateState.statistics);
       // this.privateState.pullSet = getRandomPullSet();
-      this.privateState.workSpaceItems = this.genWorkSpace(15, .5);
+      this.privateState.workSpaceItems = this.genWorkSpace(this.pullSet[this.curPullInd]);
       this.privateState.taskPopupOpened = true;
       setTimeout(() => {
         this.privateState.taskPopupOpened = false;
@@ -169,49 +178,66 @@ export default {
       }
     },
 
-    genWorkSpace(perColumn, targetPercentage) {
+    genWorkSpace(selectedPull) {
       // TODO remake generation
-      const newWorkspace = [], targetsToGen = Math.ceil(perColumn * targetPercentage);
-      for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
-        this.statistics[this.probesTaken - 1]["Total_targets"] += targetsToGen;
-        // this.privateState.statistics[this.privateState.probesTaken - 1]["Total_targets"] += targetsToGen;
-        let targetsLeft = targetsToGen;
-        for (let j = 0; j < perColumn; ++j) {
-          //checking slots left
-          // if too few left => generate only targets
-          if (perColumn - j === targetsLeft) {
-            const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
-            newWorkspace.push(this.genDragItem(
-              this.pullSet[0][chosenPos],
-              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos, true));
-            // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
-            //   {column: i + 1, row: j + 1}, true));
-            --targetsLeft;
-            continue;
-          }
-
-          // if there are spare slots =>
-          // choose targer or distractor randomly
-          if (Math.random() > 0.5 && targetsLeft) {
-            const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
-            // chosen target if any are left
-            newWorkspace.push(this.genDragItem(
-              this.pullSet[0][chosenPos],
-              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos,true));
-              // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
-              // {column: i + 1, row: j + 1}, true));
-            --targetsLeft;
-          } else {
-            // chosen distractor
-            newWorkspace.push(this.genDragItem(
-              this.pullSet[1][Math.floor(Math.random() * this.pullSet[1].length)],
-              {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}));
-            // newWorkspace.push(this.genDragItem(
-            //   this.privateState.pullSet[1][Math.floor(Math.random() * this.privateState.pullSet[1].length)],
-            //   {column: i + 1, row: j + 1}));
-          }
+      const newWorkspace = [];
+      for (let i = 0; i < 3; ++i) {
+        for (let j = 0; j < selectedPull.targets / 3; ++j) {
+          const selectedPosInd = Math.floor(Math.random() * this.sparePositions.length),
+            selectedPos = this.sparePositions[selectedPosInd];
+          // delete selected position from spare ones
+          this.sparePositions.splice(selectedPosInd, 1);
+          newWorkspace.push(this.genDragItem(selectedPull.pull[i], selectedPos, i, true));
         }
       }
+      for (let i = 0; i < 210 - selectedPull.targets; ++i) {
+        const selectedPosInd = Math.floor(Math.random() * this.sparePositions.length),
+          selectedPos = this.sparePositions[selectedPosInd];
+        // delete selected position from spare ones
+        this.sparePositions.splice(selectedPosInd, 1);
+        newWorkspace.push(this.genDragItem(pullsData.distractorPull[Math.floor(Math.random() * pullsData.distractorPull.length)],
+          selectedPos));
+      }
+      // for (let i = 0; i < this.privateState.curPeriod.days; ++i) {
+      //   this.statistics[this.probesTaken - 1]["Total_targets"] += targetNum;
+      //   // this.privateState.statistics[this.privateState.probesTaken - 1]["Total_targets"] += targetsToGen;
+      //   let targetsLeft = targetsToGen;
+      //   for (let j = 0; j < perColumn; ++j) {
+      //     //checking slots left
+      //     // if too few left => generate only targets
+      //     if (perColumn - j === targetsLeft) {
+      //       const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
+      //       newWorkspace.push(this.genDragItem(
+      //         this.pullSet[0][chosenPos],
+      //         {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos, true));
+      //       // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
+      //       //   {column: i + 1, row: j + 1}, true));
+      //       --targetsLeft;
+      //       continue;
+      //     }
+      //
+      //     // if there are spare slots =>
+      //     // choose targer or distractor randomly
+      //     if (Math.random() > 0.5 && targetsLeft) {
+      //       const chosenPos = Math.floor(Math.random() * this.pullSet[0].length);
+      //       // chosen target if any are left
+      //       newWorkspace.push(this.genDragItem(
+      //         this.pullSet[0][chosenPos],
+      //         {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}, chosenPos,true));
+      //         // this.privateState.pullSet[0][Math.floor(Math.random() * this.privateState.pullSet[0].length)],
+      //         // {column: i + 1, row: j + 1}, true));
+      //       --targetsLeft;
+      //     } else {
+      //       // chosen distractor
+      //       newWorkspace.push(this.genDragItem(
+      //         this.pullSet[1][Math.floor(Math.random() * this.pullSet[1].length)],
+      //         {column: i + 1, row: j + 1, half: (i + j) % 2 + 1}));
+      //       // newWorkspace.push(this.genDragItem(
+      //       //   this.privateState.pullSet[1][Math.floor(Math.random() * this.privateState.pullSet[1].length)],
+      //       //   {column: i + 1, row: j + 1}));
+      //     }
+      //   }
+      // }
       return newWorkspace;
     }
   },

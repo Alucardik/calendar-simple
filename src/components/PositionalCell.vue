@@ -12,13 +12,6 @@ export default {
     curItem: Object
   },
 
-  // watch: {
-  //   curItem: (newVal) => {
-  //     console.log("UPDATING ITEM", newVal);
-  //
-  //   },
-  // },
-
   data: function () {
     return {
       storedItems: []

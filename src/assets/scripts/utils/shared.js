@@ -26,7 +26,7 @@ export default {
     // how many times it will be tested
     numberOfProbes: 1,
     // how much time (in seconds) does participant have for memorising
-    memOffset: 1,
+    memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
     taskOffset: 6000,
     // when signal for switching should be heard
