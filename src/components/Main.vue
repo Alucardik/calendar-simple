@@ -16,6 +16,11 @@
 
         <TaskPopup :targetArray="pullSet[0]"
                    :isOpen="privateState.taskPopupOpened"/>
+    <button type="button" class="header__button header__button_type_exit"
+            style="width: 120px;"
+            @click="handleProbeInterrupt">
+      Закончить раунд
+    </button>
   </section>
 </template>
 

@@ -1,9 +1,9 @@
 .drag-n-drop__pseudo-block-zone {
   position: absolute;
   height: 100%;
-  min-width: 15px;
+  min-width: 7px;
   top: 0;
-  right: 50%;
+  right: calc(50% - 1px);
   z-index: 2;
   background: transparent;
 }

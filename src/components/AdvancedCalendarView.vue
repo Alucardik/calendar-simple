@@ -16,15 +16,23 @@
         </div>
       </div>
       <div class="date-cell__contents" v-for="column in period.days" :key="`column${column}`">
-        <TableCell :column="column" :items="eventsArray" :stats="stats" :probeNum="probeNum"/>
-        <div class="date-cell__table-cell"
+        <TableCell @add-item="handleDropOnCell" :column="column" :items="eventsArray" :stats="stats" :probeNum="probeNum"/>
+        <div @click="handleCustom" class="date-cell__table-cell"
              v-for="_ in 24"
              :key="`column${column}cell${(_ + _ % 2) / 2}half${-(_ % 2) + 2}`"
              :row="(_ + _ % 2) / 2" :half="-(_ % 2) + 2"/>
-        <div class="date-cell__table-cell"
+        <div @click="handleCustom" class="date-cell__table-cell"
              v-for="_ in 24"
              :key="`column${column}cell${(_ + _ % 2) / 2 + 12}half${-(_ % 2) + 2}`"
              :row="(_ + _ % 2) / 2 + 12" :half="-(_ % 2) + 2"/>
+<!--        <PositionalCell v-for="_ in 24"-->
+<!--             :key="`column${column}cell${(_ + _ % 2) / 2}half${-(_ % 2) + 2}`"-->
+<!--             :row="(_ + _ % 2) / 2" :half="-(_ % 2) + 2"-->
+<!--             :curItem="droppedItem"/>-->
+<!--        <PositionalCell v-for="_ in 24"-->
+<!--             :key="`column${column}cell${(_ + _ % 2) / 2 + 12}half${-(_ % 2) + 2}`"-->
+<!--             :row="(_ + _ % 2) / 2 + 12" :half="-(_ % 2) + 2"-->
+<!--             :curItem="droppedItem"/>-->
       </div>
     </div>
   </div>
@@ -32,6 +40,7 @@
 
 <script>
 import TableCell from "@/components/TableCell";
+// import PositionalCell from "./PositionalCell";
 import consts from "../assets/scripts/utils/constants.js";
 import shared from "@/assets/scripts/utils/shared";
 
@@ -40,6 +49,7 @@ export default {
 
   components: {
     TableCell,
+    // PositionalCell
   },
 
   props: {
@@ -48,6 +58,12 @@ export default {
     period: Object,
     stats: Array,
     probeNum: Number,
+  },
+
+  data: function () {
+    return {
+      droppedItem: {}
+    };
   },
 
   created() {
@@ -69,6 +85,18 @@ export default {
         "justify-content": this.period.days === 1 ? "flex-start" : "space-around",
         "padding-left": this.period.days === 1 ? "40px" : "0"
       }
+    },
+  },
+
+  methods: {
+    handleCustom() {
+      // console.log(`captured at row ${this.row} and half ${this.half}`);
+      // console.log(this.curItem.title);
+    },
+
+    handleDropOnCell(item) {
+      // console.log("Passing dragged", item);
+      this.droppedItem = item;
     },
   },
 }

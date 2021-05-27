@@ -74,6 +74,9 @@ export default {
       if (actCell.classList.contains("date-cell__table-cell")) {
         const itemID = evt.dataTransfer.getData('itemID');
         const item = this.items.find((it) => it.id === itemID);
+        // this.$emit("add-item", item);
+        // this.$refs.cell = actCell;
+        // this.$refs.cell.click();
         item.column = this.column;
         item.row = parseInt(actCell.attributes["row"].textContent);
         item.half = parseInt(actCell.attributes["half"].textContent);
@@ -107,7 +110,8 @@ export default {
         return;
       }
       draggedItem.posNum = item.posNum + 1;
-      draggedItem.neighbours = [...item.neighbours, item];
+      draggedItem.neighbours = Object.create(item.neighbours);
+      draggedItem.neighbours.push(item);
       item.neighbours.forEach((it) => {
         it.neighbours.push(draggedItem);
         if (it.posNum >= draggedItem.posNum) {
