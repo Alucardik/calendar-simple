@@ -34,6 +34,8 @@
 @import url(../styles/blocks/drag-n-drop/__drag-item/_striked/drag-n-drop__drag-item_striked.css);
 @import url(../styles/blocks/drag-n-drop/__drop-zone/drag-n-drop__drop-zone.css);
 @import url(../styles/blocks/drag-n-drop/__resize-field/drag-n-drop__resize-field.css);
+@import url(../styles/blocks/drag-n-drop/__pseudo-block-zone/drag-n-drop__pseudo-block-zone.css);
+@import url(../styles/blocks/drag-n-drop/__pseudo-block-zone/_type/drag-n-drop__pseudo-block-zone_type_perm.css);
 
 @import url(../styles/blocks/main-space/main-space.css);
 @import url(../styles/blocks/timeline-column/timeline-column.css);

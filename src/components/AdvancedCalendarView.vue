@@ -8,7 +8,7 @@
     </div>
     <div class="date-cell" :style="calcTableSz">
       <!-- fictional cell for alignment -->
-      <div></div>
+      <div/>
       <div class="date-cell__border-gap" v-for="_ in period.days" :key="`border-day${_}`"></div>
       <div style="min-height: 100%; width: 100%; display: flex; flex-direction: column">
         <div class="date-cell__border-gap date-cell__border-gap_type_vertical" v-for="_ in 24" :key="`timeline-cell${_}`">
@@ -71,45 +71,6 @@ export default {
       }
     },
   },
-
-  // статические функции
-  methods: {
-    // moveCellsOnTop(dragInProcess) {
-    //   console.log("Invoked", dragInProcess);
-    //   if (dragInProcess) {
-    //     this.timetable.forEach(cell => {
-    //       cell.classList.add("date-cell__table-cell_on-top");
-    //     });
-    //   } else {
-    //     this.timetable.forEach(cell => {
-    //       cell.classList.add("date-cell__table-cell_on-top");
-    //     });
-    //   }
-    // }
-    // onDragStart: (evt, item) => {
-    //   const chosenDiv = evt.target.closest(".date-cell__table-cell");
-    //   console.log("Picked at:", chosenDiv);
-    //   console.log(chosenDiv.attributes["row"].textContent, chosenDiv.attributes["column"]);
-    //   // console.log("Drag evt:", evt);
-    //   // console.log("params:", evt.target.closest(".date-cell__table-cell").row,
-    //   //   evt.target.closest(".date-cell__table-cell").column);
-    //   // item.row = evt.target.closest(".date-cell__table-cell").row;
-    //   // item.column = evt.target.closest(".date-cell__table-cell").column;
-    //   evt.dataTransfer.dropEffect = 'move';
-    //   evt.dataTransfer.effectAllowed = 'move';
-    //   evt.dataTransfer.setData('itemID', item.id);
-    // },
-    //
-    // onDrop (evt) {
-    //   console.log("Dropped at:", evt.target.closest(".date-cell__table-cell"));
-    //   // console.log("Drop evt:", evt);
-    //   // const itemID = evt.dataTransfer.getData('itemID');
-    //   // const item = this.draGnDropItems.find(it => it.id === itemID);
-    //   // item.row = evt.target.row;
-    //   // item.column = evt.target.column;
-    // },
-  },
-
 }
 </script>
 

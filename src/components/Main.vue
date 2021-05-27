@@ -148,14 +148,16 @@ export default {
 
     genDragItem(actName, pos, targetNum=-1, isTarget=false) {
       return {
-        id: `act${pos.row}${pos.column}`,
+        id: `r${pos.row}c${pos.column}h${pos.half}`,
         row: pos.row,
         column: pos.column,
         half: pos.half,
-        duration: 15,
+        neighbours: [],
+        posNum: 0,
+        // duration: 15,
         height: 1,
         title: actName,
-        firstRender: true,
+        // firstRender: true,
         isTarget: isTarget,
         targetNum: targetNum,
         isStriked: false

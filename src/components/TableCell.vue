@@ -7,10 +7,13 @@
          @click="onClick($event, item)"
          :style="renderItem(item)"
          draggable="true"
+         @drop="handleCollision($event, item)"
          @dragstart="onDragStart($event, item)">
-        {{ item.title }}
-<!--        <div class="drag-n-drop__resize-field"></div>-->
+      <span>{{ item.title }}</span>
+      <!--        <div class="drag-n-drop__resize-field"></div>-->
     </div>
+    <div class="drag-n-drop__pseudo-block-zone drag-n-drop__pseudo-block-zone_type_perm"/>
+    <div class="drag-n-drop__pseudo-block-zone"/>
   </div>
 </template>
 
@@ -46,29 +49,16 @@ export default {
     },
 
     renderItem(item) {
-      return {"top": `calc(100% / 24 * ${item.row - 1}`,
-              "margin-top": `calc(${item.half - 1} * 25px)`,
-              "height": `${item.height}px`,
-              "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"};
+      return {
+        "top": `calc(100% / 24 * ${item.row - 1} + ${item.half - 1} * 25px)`,
+        "left": `calc(${item.posNum} * (95% / ${item.neighbours.length + 1} + 5px))`,
+        // "height": `${item.height}px`,
+        "width": `calc(95% / ${item.neighbours.length + 1} - 5px)`,
+        "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"
+      };
     },
 
     onDragStart(evt, item)  {
-      // this.timetable.forEach(cell => {
-      //   cell.classList.add("date-cell__table-cell_on-top");
-      // });
-      // console.log("Picked at:", evt.target);
-      // this.$parent.moveCellsOnTop(true);
-      // const chosenDiv = evt.target.closest(".date-cell__table-cell");
-      // console.log("Picked at:", document.querySelectorAll(":hover"));
-      // console.log("THIS:", this);
-      // console.log("Drag comp", dragZone.componentOptions.propsData);
-      // console.log(this.$props.column);
-      // console.log("Drag evt:", evt);
-      // console.log("params:", evt.target.closest(".date-cell__table-cell").row,
-      //   evt.target.closest(".date-cell__table-cell").column);
-      // item.row = evt.target.closest(".date-cell__table-cell").row;
-      // item.column = evt.target.closest(".date-cell__table-cell").column;
-      // console.log(evt.dataTransfer);
       evt.dataTransfer.effectAllowed = 'move';
       evt.dataTransfer.dropEffect = 'move';
       evt.dataTransfer.setData('itemID', item.id);
@@ -79,57 +69,61 @@ export default {
       evt.target.classList.add("drag-n-drop");
       const actCell = document.elementFromPoint(evt.clientX, evt.clientY);
       evt.target.classList.remove("drag-n-drop");
+      console.log("DROPPED", actCell);
 
-      // this.timetable.forEach(cell => {
-      //   cell.classList.remove("date-cell__table-cell_on-top");
-      // });
-
-      // console.log("Dropped at:", evt.target.nearest(".date-cell__table-cell"));
-      // console.log("Items:", dropCell.componentOptions.propsData.items);
-      // const item = evt.dataTransfer.getData("item");
-      // console.log("Transferring:", item);
-      // console.log("THIS:", this);
-      // console.log(evt.dataTransfer);
-
-      // this.items.push({title: evt.dataTransfer.getData("itemTitle"),
-      //   id: evt.dataTransfer.getData("itemId")});
-      // evt.dataTransfer.clearData();
-      // this.$forceUpdate();
-
-      // dropCell.componentOptions.propsData.items.push(item);
-      // console.log("Drop Comp:", dropCell);
-      // console.log("Drop evt:", evt);
-      // const itemID = evt.dataTransfer.getData('itemID');
-      // const item = this.draGnDropItems.find(it => it.id === itemID);
-      // item.row = evt.target.row;
-      // item.column = evt.target.column;
-      // console.log("CELL", actCell.attributes.row.textContent)
       if (actCell.classList.contains("date-cell__table-cell")) {
         const itemID = evt.dataTransfer.getData('itemID');
         const item = this.items.find((it) => it.id === itemID);
         item.column = this.column;
         item.row = parseInt(actCell.attributes["row"].textContent);
         item.half = parseInt(actCell.attributes["half"].textContent);
+        item.neighbours.forEach((it) => {
+          if (it.posNum !== 0) {
+            --it.posNum;
+          }
+          // find and delete current items from neighbours
+          const delInd = it.neighbours.findIndex((delIt) => delIt.id === item.id);
+          it.neighbours.splice(delInd, 1);
+        });
+        item.neighbours = [];
+        item.posNum = 0;
+      } else {
+        // const collisionPath = document.elementsFromPoint(evt.clientX, evt.clientY),
+        //   collisionCell = collisionPath.find((el) => el.classList.contains("date-cell__table-cell")),
+        //   collisionObj = collisionPath.find((el) => el.classList.contains("drag-n-drop__drag-item"));
+        // console.log("Collision in", collisionCell);
+        // console.log("Collision with", collisionObj);
       }
-      // item.firstRender = true;
-      // this.$parent.moveCellsOnTop(false);
+    },
+
+    handleCollision(e, item) {
+      // temporary limitation of 1 neighbour at max
+      if (item.neighbours.length) {
+        return;
+      }
+      const draggedItem = this.items.find((it) => it.id === e.dataTransfer.getData('itemID'));
+      // prevent items self collisions
+      if (item === draggedItem) {
+        return;
+      }
+      draggedItem.posNum = item.posNum + 1;
+      draggedItem.neighbours = [...item.neighbours, item];
+      item.neighbours.forEach((it) => {
+        it.neighbours.push(draggedItem);
+        if (it.posNum >= draggedItem.posNum) {
+          ++it.posNum;
+        }
+      });
+      item.neighbours.push(draggedItem);
+      console.log("Item after neighbours", item.neighbours);
+      console.log("Dragged item neighbours", draggedItem.neighbours);
+      draggedItem.column = this.column;
+      draggedItem.row = item.row;
+      draggedItem.half = item.half;
     },
 
     onClick(evt, item) {
       const {isTarget, isStriked, targetNum} = item;
-
-      // if (evt.target.classList.contains("drag-n-drop__drag-item_striked")) {
-      //   if (isTarget) {
-      //     --this.stats[this.probeNum - 1]["Targets_struck"];
-      //   }
-      //   --this.stats[this.probeNum - 1]["Total_words_struck"];
-      // } else {
-      //   if (isTarget) {
-      //     ++this.stats[this.probeNum - 1]["Targets_struck"];
-      //   }
-      //   ++this.stats[this.probeNum - 1]["Total_words_struck"];
-      // }
-      // evt.target.classList.toggle("drag-n-drop__drag-item_striked");
       if (isStriked) {
         if (isTarget) {
           --this.stats[this.probeNum - 1]["Targets_struck"];
@@ -144,7 +138,6 @@ export default {
         ++this.stats[this.probeNum - 1]["Total_words_struck"];
       }
       item.isStriked = !item.isStriked;
-      // console.log("Cell key", item);
     }
   }
 }
