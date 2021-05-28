@@ -20,17 +20,22 @@ export default {
     "Gender": ""
   },
 
+  allStats: {
+    proofreading: false,
+    switchability: false
+  },
+
   sessionConfig: {
-    // what type of task will be tested
-    taskType: "proofreading",
+    // what type of task will be tested (first one is picked randomly)
+    taskType: constants.taskTypes[Math.floor(Math.random() * 2)],
     // how many times it will be tested
-    numberOfProbes: 1,
+    numberOfProbes: 3,
     // how much time (in seconds) does participant have for memorising
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
     taskOffset: 6000,
     // when signal for switching should be heard
-    signalOffset: 15
+    signalOffset: 15,
   },
 
   genTaskInstruction: (config) => {

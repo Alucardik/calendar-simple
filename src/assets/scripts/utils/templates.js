@@ -1,4 +1,3 @@
-// TODO add all pulls and test block by block
 
 const targetPulls = [
   {
@@ -144,8 +143,3 @@ const genPositions = () => {
 }
 
 export {targetPulls, distractorPull, genPositions};
-
-// export default function getRandomPullSet() {
-//   const pullNum = Math.floor(Math.random() * targetPulls.length);
-//   return [targetPulls[pullNum], distractorPull];
-// }

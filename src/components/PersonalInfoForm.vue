@@ -55,6 +55,12 @@ export default {
     };
   },
 
+  mounted() {
+    // clear all data before starting new probe
+    shared.allStats.proofreading = false;
+    shared.allStats.proofreading = false;
+  },
+
   methods: {
     handleSubmit(e) {
       e.preventDefault();
