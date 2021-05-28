@@ -10,6 +10,7 @@
         <label class="form__field">
           <input v-model="privateState.name"
                  placeholder="Ваши имя и фамилия"
+                 minlength="2"
                  name="name"
                  type="text"
                  class="form__input" required>

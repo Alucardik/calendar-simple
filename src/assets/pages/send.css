@@ -1,0 +1,25 @@
+@import url(../styles/vendor/normalize.css);
+@import url(../styles/blocks/utility.css);
+@import url(../fonts/open-sans.css);
+
+@import url(../styles/blocks/page/page.css);
+
+@import url(../styles/blocks/home/__welcome/home__welcome.css);
+
+.send-button {
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  background: #42b983;
+  border-radius: 50%;
+  font-family: "Open Sans", "Roboto Light", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  transition: all .3s ease-in-out;
+}
+
+.send-button:hover {
+  transform: scale(1.15);
+}

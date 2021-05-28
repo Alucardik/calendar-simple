@@ -1,7 +1,6 @@
 <template>
   <section class="page">
     <div class="instruction">
-<!--      <p v-html="this.taskText" class="instruction__container"></p>-->
       <p>
         Здравствуйте!
       </p>

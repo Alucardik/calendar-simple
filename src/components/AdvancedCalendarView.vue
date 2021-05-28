@@ -40,7 +40,6 @@
 
 <script>
 import TableCell from "@/components/TableCell";
-// import PositionalCell from "./PositionalCell";
 import consts from "../assets/scripts/utils/constants.js";
 import shared from "@/assets/scripts/utils/shared";
 

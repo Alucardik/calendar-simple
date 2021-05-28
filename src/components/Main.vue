@@ -32,14 +32,13 @@ import TaskPopup from "./TaskPopup";
 import shared from "../assets/scripts/utils/shared";
 import constants from "../assets/scripts/utils/constants";
 import * as pullsData from "../assets/scripts/utils/templates";
-import sendStats from "../assets/scripts/utils/sheetsApi";
 
 export default {
   name: 'Main',
 
   created() {
-    this.json2csv = require('csvjson-json2csv');
     this.notifSignal = new Audio(require("../assets/media/notification.ogg"));
+    console.log("STATS ON INIT", shared.allStats);
     this.signalTimerId = false;
     this.sparePositions = [];
     this.statistics = [];
@@ -60,10 +59,12 @@ export default {
     if (this.signalTimerId) {
       clearInterval(this.signalTimerId);
     }
+    console.log(`Switched from ${this.sharedState.taskType}`);
     // switch task type
     (this.sharedState.taskType === "proofreading")
     ? (this.sharedState.taskType = "switchability")
     : (this.sharedState.taskType = "proofreading");
+    console.log(`to ${this.sharedState.taskType}`);
   },
 
   data: function() {
@@ -106,7 +107,6 @@ export default {
       if (this.signalTimerId) {
         clearInterval(this.signalTimerId);
       }
-      // this.notifSignal.play();
       window.removeEventListener("click", this.recordClicks);
       this.statistics.push(Object.create(constants.sampleStatObjects[this.sharedState.taskType]));
       this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
@@ -137,23 +137,12 @@ export default {
       ++this.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
         console.log("Probes finished");
-        console.log("Collected Info");
         clearInterval(this.intervalId);
         // save cur stats
         shared.allStats[this.sharedState.taskType] = Object.assign(this.statistics);
         // if all tasks have been accomplished => finish probe
         if (shared.allStats.proofreading && shared.allStats.switchability) {
-          this.$router.push("/");
-          // send data to Sheets API
-          console.log("FINALLY", shared.allStats);
-          Promise.all([sendStats(this.json2csv(shared.personalInfo), 0),
-            sendStats(this.json2csv(shared.allStats), 916952360)])
-            .then(() => {
-              window.alert("All Data was successfully retrieved");
-            })
-            .catch((errs) => {
-              window.alert(`API encountered errors with status:\n${errs}`);
-            });
+          this.$router.push("/send");
         } else {
           // else go for another task
           this.$router.push("/about");

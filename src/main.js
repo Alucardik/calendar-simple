@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Main from "./components/Main";
 import Instruction from "./components/Instruction";
 import PersonalInfoForm from "./components/PersonalInfoForm";
+import SendStatsConfirm from "./components/SendStatsConfirm";
 
 Vue.config.productionTip = false;
 
@@ -26,6 +27,10 @@ const routes = [
   {
     path: "/home",
     component: Home
+  },
+  {
+    path: "/send",
+    component: SendStatsConfirm
   },
   {
     path: "*",
