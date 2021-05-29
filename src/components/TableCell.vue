@@ -54,7 +54,7 @@ export default {
         "left": `calc(${item.posNum} * (95% / ${item.neighbours.length + 1} + 5px))`,
         // "height": `${item.height}px`,
         "width": `calc(95% / ${item.neighbours.length + 1} - 5px)`,
-        "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"
+        // "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"
       };
     },
 
