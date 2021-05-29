@@ -109,7 +109,7 @@ export default {
       //   });
       // shared.allStats.proofreading[0].Clicks = JSON.stringify(shared.allStats.proofreading[0].Clicks);
       // shared.allStats.switchability[0].Clicks = JSON.stringify(shared.allStats.switchability[0].Clicks);
-      console.log("CHECK", this.json2csv(shared.personalInfo).split("\n"))
+      // console.log("CHECK", this.json2csv(shared.personalInfo).split("\n"))
       Promise.all([sendStats(this.json2csv(shared.personalInfo), "'Данные Участников'"),
         sendStats(this.json2csv(shared.allStats.proofreading), "'Пробы по Задаче1'"),
         sendStats(this.json2csv(shared.allStats.switchability), "'Пробы по Задаче2'")])

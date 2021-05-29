@@ -89,14 +89,16 @@ export default {
 
   methods: {
     recordClicks() {
-      this.statistics[this.probesTaken - 1]["Clicks"].push(Math.floor((Date.now() - this.probeStart) / 1000)
-        - this.sharedState.memOffset);
+      // this.statistics[this.probesTaken - 1]["Clicks"].push(Math.floor((Date.now() - this.probeStart) / 1000)
+      //   - this.sharedState.memOffset);
+      this.statistics[this.probesTaken - 1]["Clicks"] += `${(Math.floor((Date.now() - this.probeStart) / 1000)
+        - this.sharedState.memOffset).toString()}; `;
     },
 
     collectStat() {
-      // TODO add separate button / page for successful send stats request confirmation
       this.statistics[this.probesTaken - 1]["Time"] =
         (Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
+      this.statistics[this.probesTaken - 1]["Clicks"] += "]";
       // console.log("COLLECTING STAT for", this.privateState.probesTaken);
       // this.privateState.statistics[this.privateState.probesTaken - 1]["Probe"] = this.privateState.probesTaken;
       // this.privateState.statistics[this.privateState.probesTaken - 1]["Time"] =
@@ -111,7 +113,8 @@ export default {
       this.statistics.push(Object.create(constants.sampleStatObjects[this.sharedState.taskType]));
       this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
       // initialise empty clicks time array
-      this.statistics[this.probesTaken - 1]["Clicks"] = [];
+      // this.statistics[this.probesTaken - 1]["Clicks"] = [];
+      this.statistics[this.probesTaken - 1]["Clicks"] = "[";
       if (this.curPullInd !== -1) {
         // delete selected pull from available ones
         this.pullSet.splice(this.curPullInd, 1);
