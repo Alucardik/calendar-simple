@@ -27,7 +27,7 @@ export default {
 
   mounted() {
     // start sending data
-    console.log("FINALLY", shared.allStats);
+    console.log(shared.allStats);
     this.createRequest();
   },
 
@@ -96,20 +96,6 @@ export default {
 
     createRequest() {
       this.buttonStatus = 0;
-      // Promise.all([sendStats(this.json2csv(shared.personalInfo), 0),
-      //   sendStats(this.json2csv(shared.allStats), 916952360)])
-      //   .then(() => {
-      //     this.buttonStatus = 1;
-      //     // window.alert("Все данные были успешно отправлены, можете выходить");
-      //   })
-      //   .catch((errs) => {
-      //     this.buttonStatus = -1;
-      //     console.log("Errors", errs);
-      //     // window.alert(`Возникла ошибка:\n${errs}\nПожалуйста обратитесь к организатору или повторить отправку.`);
-      //   });
-      // shared.allStats.proofreading[0].Clicks = JSON.stringify(shared.allStats.proofreading[0].Clicks);
-      // shared.allStats.switchability[0].Clicks = JSON.stringify(shared.allStats.switchability[0].Clicks);
-      // console.log("CHECK", this.json2csv(shared.personalInfo).split("\n"))
       Promise.all([sendStats(this.json2csv(shared.personalInfo), "'Данные Участников'"),
         sendStats(this.json2csv(shared.allStats.proofreading), "'Пробы по Задаче1'"),
         sendStats(this.json2csv(shared.allStats.switchability), "'Пробы по Задаче2'")])
