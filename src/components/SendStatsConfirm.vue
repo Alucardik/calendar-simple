@@ -27,7 +27,6 @@ export default {
 
   mounted() {
     // start sending data
-    console.log(shared.allStats);
     this.createRequest();
   },
 

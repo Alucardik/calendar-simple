@@ -1,16 +1,10 @@
 .date-cell__table-cell {
   /*setting min size, so that cell wouldn't collapse,
    but instead would extend to cover whole fraction*/
-    /*grid-row: 2;*/
-  /*overflow: hidden;*/
-  /*text-overflow: clip;*/
-  /*min-width: 0;*/
-  /*min-height: 0;*/
   min-width: 80px;
   /*initial height*/
   /*min-height: 49px;*/
   min-height: 24px;
-  /*max-height: 0;*/
   max-width: 100%;
   padding: 0;
   border-top: rgba(218,220,224, .4) 1px groove;

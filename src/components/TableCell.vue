@@ -1,6 +1,6 @@
 <template>
   <div class="drag-n-drop__drop-zone" @drop="onDrop" @dragover.prevent @dragenter.prevent>
-<!--v-resize="{ callOnAdd: false }"  @resize="onResize($event, item)" -->
+<!--resize event template attributes: v-resize="{ callOnAdd: false }"  @resize="onResize($event, item)" -->
     <div v-for="item in filteredItems"
          :class="`drag-n-drop__drag-item ${item.isStriked && 'drag-n-drop__drag-item_striked'}`"
          :key="item.id"
@@ -10,7 +10,6 @@
          @drop="handleCollision($event, item)"
          @dragstart="onDragStart($event, item)">
       <span>{{ item.title }}</span>
-      <!--        <div class="drag-n-drop__resize-field"></div>-->
     </div>
     <div class="drag-n-drop__pseudo-block-zone drag-n-drop__pseudo-block-zone_type_perm"/>
     <div class="drag-n-drop__pseudo-block-zone"/>
@@ -20,10 +19,6 @@
 <script>
 export default {
   name: "TableCell",
-
-  created() {
-
-  },
 
   props: {
     items: Array,
@@ -52,9 +47,7 @@ export default {
       return {
         "top": `calc(100% / 24 * ${item.row - 1} + ${item.half - 1} * 25px)`,
         "left": `calc(${item.posNum} * (95% / ${item.neighbours.length + 1} + 5px))`,
-        // "height": `${item.height}px`,
         "width": `calc(95% / ${item.neighbours.length + 1} - 5px)`,
-        // "color":  (item.isTarget) ? "hsl(279, 89%, 36%)" : "white"
       };
     },
 
@@ -69,14 +62,10 @@ export default {
       evt.target.classList.add("drag-n-drop");
       const actCell = document.elementFromPoint(evt.clientX, evt.clientY);
       evt.target.classList.remove("drag-n-drop");
-      console.log("DROPPED", actCell);
 
       if (actCell.classList.contains("date-cell__table-cell")) {
         const itemID = evt.dataTransfer.getData('itemID');
         const item = this.items.find((it) => it.id === itemID);
-        // this.$emit("add-item", item);
-        // this.$refs.cell = actCell;
-        // this.$refs.cell.click();
         item.column = this.column;
         item.row = parseInt(actCell.attributes["row"].textContent);
         item.half = parseInt(actCell.attributes["half"].textContent);
@@ -90,12 +79,6 @@ export default {
         });
         item.neighbours = [];
         item.posNum = 0;
-      } else {
-        // const collisionPath = document.elementsFromPoint(evt.clientX, evt.clientY),
-        //   collisionCell = collisionPath.find((el) => el.classList.contains("date-cell__table-cell")),
-        //   collisionObj = collisionPath.find((el) => el.classList.contains("drag-n-drop__drag-item"));
-        // console.log("Collision in", collisionCell);
-        // console.log("Collision with", collisionObj);
       }
     },
 
@@ -119,8 +102,6 @@ export default {
         }
       });
       item.neighbours.push(draggedItem);
-      console.log("Item after neighbours", item.neighbours);
-      console.log("Dragged item neighbours", draggedItem.neighbours);
       draggedItem.column = this.column;
       draggedItem.row = item.row;
       draggedItem.half = item.half;
@@ -148,5 +129,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

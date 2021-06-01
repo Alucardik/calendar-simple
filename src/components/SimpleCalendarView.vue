@@ -36,12 +36,6 @@ export default {
     }
   },
 
-  // пересчитываются каждый раз, когда меняется параметры, от которых зависит return (или типа того)
-  computed: {
-
-  },
-
-  // статические функции
   methods: {
     handleCellClick: (evt, date, prevDay) => {
       const curObj = evt.target;

@@ -16,6 +16,7 @@
       </div>
     </div>
     <nav class="header__settings">
+<!--      timer display element-->
 <!--      <div class="header__timer">-->
 <!--        До конца пробы: {{sessionInfo.taskOffset - privateState.elapsed}} секунд-->
 <!--      </div>-->
@@ -26,9 +27,6 @@
         <span class="header__dropdown-elem" @click="period.days = 4; toggleDropdown()">4 Дня</span>
         <span class="header__dropdown-elem" @click="period.days = 7; toggleDropdown()">Неделя</span>
       </div>
-<!--      <button type="button" class="header__button header__button_type_exit" @click="onInterrupt">-->
-<!--        Завершить-->
-<!--      </button>-->
     </nav>
   </header>
 </template>
@@ -111,5 +109,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

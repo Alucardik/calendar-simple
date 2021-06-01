@@ -25,14 +25,6 @@
              v-for="_ in 24"
              :key="`column${column}cell${(_ + _ % 2) / 2 + 12}half${-(_ % 2) + 2}`"
              :row="(_ + _ % 2) / 2 + 12" :half="-(_ % 2) + 2"/>
-<!--        <PositionalCell v-for="_ in 24"-->
-<!--             :key="`column${column}cell${(_ + _ % 2) / 2}half${-(_ % 2) + 2}`"-->
-<!--             :row="(_ + _ % 2) / 2" :half="-(_ % 2) + 2"-->
-<!--             :curItem="droppedItem"/>-->
-<!--        <PositionalCell v-for="_ in 24"-->
-<!--             :key="`column${column}cell${(_ + _ % 2) / 2 + 12}half${-(_ % 2) + 2}`"-->
-<!--             :row="(_ + _ % 2) / 2 + 12" :half="-(_ % 2) + 2"-->
-<!--             :curItem="droppedItem"/>-->
       </div>
     </div>
   </div>
@@ -48,7 +40,6 @@ export default {
 
   components: {
     TableCell,
-    // PositionalCell
   },
 
   props: {
@@ -71,7 +62,6 @@ export default {
     this.getDayOfTheWeek = shared.getDayOfTheWeek;
   },
 
-  // пересчитываются каждый раз, когда меняются параметры, от которых зависит return
   computed: {
     calcTableSz() {
       return {
@@ -89,12 +79,9 @@ export default {
 
   methods: {
     handleCustom() {
-      // console.log(`captured at row ${this.row} and half ${this.half}`);
-      // console.log(this.curItem.title);
     },
 
     handleDropOnCell(item) {
-      // console.log("Passing dragged", item);
       this.droppedItem = item;
     },
   },
@@ -102,5 +89,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

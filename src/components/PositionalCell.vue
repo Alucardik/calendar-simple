@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// potential component for reimplementing drag n drop
+
 export default {
   name: "PositionalCell",
 
@@ -18,12 +20,8 @@ export default {
     };
   },
 
-  computed: {
-  },
-
   methods: {
     handleCustom() {
-      // console.log("CAPTURED", this.curItem , "in", this.props.row, this.props.half);
       console.log(`captured at row ${this.row} and half ${this.half}`);
       console.log(this.curItem.title);
     }
@@ -32,5 +30,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

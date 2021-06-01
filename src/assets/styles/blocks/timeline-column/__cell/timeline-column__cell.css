@@ -1,6 +1,5 @@
 .timeline-column__cell {
     position: relative;
-    /*bottom: calc(10px / 2);*/
     width: 100%;
     height: 100%;
 }

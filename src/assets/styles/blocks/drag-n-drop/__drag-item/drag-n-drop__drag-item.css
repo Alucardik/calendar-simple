@@ -10,24 +10,15 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  /*equals 15 minutes on timetable*/
-  /*min-height: calc(100% / 144);*/
-  /*equals one hour on time table*/
-  /*min-height: calc(100% / 144 * 5);*/
-  /*confirmed with Anastasia*/
-  /*min-height: calc(100% / 50);*/
   min-height: calc(100% / 65);
   height: min-content;
   max-height: 100%;
   outline: none;
   background-color: rgb(3, 155, 229);
-  /*border-color: rgb(3, 155, 229);*/
   border-radius: 4px;
   font-size: 12px;
   color: white;
   z-index: 10;
   cursor: pointer;
-  /*resize: vertical;*/
-  /*resize: horizontal;*/
   overflow: hidden;
 }

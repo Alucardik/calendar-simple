@@ -37,30 +37,4 @@ export default {
     // when signal for switching should be heard
     signalOffset: 15,
   },
-
-  genTaskInstruction: (config) => {
-    const template = constants.tasksTexts[config.taskType];
-    switch (config.taskType) {
-      case "proofreading":
-        return (
-          "<span class='instruction__line'>" +
-            `${template.intro}` +
-         "</span>" +
-         "<span class='instruction__line'>" +
-            `${template.memTime + config.memOffset}` +
-          "</span>" +
-          "<span class='instruction__line'>" +
-            `${template.conclusion}` +
-          "</span>" +
-         " <span class='instruction__line'>" +
-            `${template.taskTime + config.taskOffset}` +
-          "</span>" +
-          " <span class='instruction__line'>" +
-          `Вам предстоит пройти задание ${config.numberOfProbes} раз(-а).` +
-          "</span>"
-      );
-      default:
-        return "Задание указанного типа не было найдено.";
-    }
-  }
 }

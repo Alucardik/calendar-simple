@@ -2,9 +2,6 @@
     width: 210px;
     height: 180px;
     margin-top: 15px;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*flex-basis: 24px;*/
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     grid-template-columns: repeat(7, 1fr);

@@ -38,7 +38,6 @@ export default {
 
   created() {
     this.notifSignal = new Audio(require("../assets/media/notification.ogg"));
-    console.log("STATS ON INIT", shared.allStats);
     this.signalTimerId = false;
     this.sparePositions = [];
     this.statistics = [];
@@ -59,12 +58,10 @@ export default {
     if (this.signalTimerId) {
       clearInterval(this.signalTimerId);
     }
-    console.log(`Switched from ${this.sharedState.taskType}`);
     // switch task type
     (this.sharedState.taskType === "proofreading")
     ? (this.sharedState.taskType = "switchability")
     : (this.sharedState.taskType = "proofreading");
-    console.log(`to ${this.sharedState.taskType}`);
   },
 
   data: function() {
@@ -89,8 +86,6 @@ export default {
 
   methods: {
     recordClicks() {
-      // this.statistics[this.probesTaken - 1]["Clicks"].push(Math.floor((Date.now() - this.probeStart) / 1000)
-      //   - this.sharedState.memOffset);
       this.statistics[this.probesTaken - 1]["Clicks"] += `${(Math.floor((Date.now() - this.probeStart) / 1000)
         - this.sharedState.memOffset).toString()}; `;
     },
@@ -99,10 +94,6 @@ export default {
       this.statistics[this.probesTaken - 1]["Time"] =
         (Math.round(Math.floor(Date.now() - this.probeStart) / 1000 ) - this.sharedState.memOffset);
       this.statistics[this.probesTaken - 1]["Clicks"] += "]";
-      // console.log("COLLECTING STAT for", this.privateState.probesTaken);
-      // this.privateState.statistics[this.privateState.probesTaken - 1]["Probe"] = this.privateState.probesTaken;
-      // this.privateState.statistics[this.privateState.probesTaken - 1]["Time"] =
-      //   (Math.round(Math.floor(Date.now() - this.privateState.probeStart) / 1000 ) - this.sharedState.memOffset);
     },
 
     initWorkspace() {
@@ -112,15 +103,13 @@ export default {
       window.removeEventListener("click", this.recordClicks);
       this.statistics.push(Object.create(constants.sampleStatObjects[this.sharedState.taskType]));
       this.statistics[this.probesTaken - 1]["Probe"] = this.probesTaken;
-      // initialise empty clicks time array
-      // this.statistics[this.probesTaken - 1]["Clicks"] = [];
+      // initialise empty clicks time array-string
       this.statistics[this.probesTaken - 1]["Clicks"] = "[";
       if (this.curPullInd !== -1) {
         // delete selected pull from available ones
         this.pullSet.splice(this.curPullInd, 1);
       }
       this.curPullInd = Math.floor(Math.random() * this.pullSet.length);
-      console.log("INDEX", this.curPullInd);
       this.sparePositions = pullsData.genPositions();
       this.privateState.workSpaceItems = this.genWorkSpace(this.pullSet[this.curPullInd]);
       this.privateState.taskPopupOpened = true;
@@ -135,11 +124,9 @@ export default {
 
     reinitWorkspace() {
       this.collectStat();
-      console.log("NEW STAT", this.statistics);
       this.probeStart = Date.now();
       ++this.probesTaken;
       if (this.probesTaken > this.sharedState.numberOfProbes) {
-        console.log("Probes finished");
         clearInterval(this.intervalId);
         // save cur stats
         shared.allStats[this.sharedState.taskType] = Object.assign(this.statistics);
@@ -154,7 +141,6 @@ export default {
 
         return;
       }
-      console.log("taking probe:", this.probesTaken);
       this.initWorkspace();
     },
 
@@ -172,10 +158,8 @@ export default {
         half: pos.half,
         neighbours: [],
         posNum: 0,
-        // duration: 15,
         height: 1,
         title: actName,
-        // firstRender: true,
         isTarget: isTarget,
         targetNum: targetNum,
         isStriked: false
