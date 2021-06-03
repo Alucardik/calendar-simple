@@ -5,7 +5,7 @@ const pizzly = new Pizzly({
   publishableKey: "pope8Qy8qfYyppnHRMgLMpQ8MuEUKDGeyhfGCj"
 });
 const spreadsheetId = '1Ruh0BsRYzwbePVC8SczTSGxLRlNQtCyCMZn7ez0W14U';
-const authId = "f9580380-be2e-11eb-8bd0-9ff158aa406e";
+const authId = "609dcc60-c464-11eb-bdbb-b3a475537fb7";
 
 function sendStats(csvData, sheetName) {
   return pizzly.integration("google-sheets")
