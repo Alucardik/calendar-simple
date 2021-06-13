@@ -29,7 +29,7 @@ export default {
     // what type of task will be tested (first one is picked randomly)
     taskType: constants.taskTypes[Math.floor(Math.random() * 2)],
     // how many times it will be tested
-    numberOfProbes: 3,
+    numberOfProbes: 30,
     // how much time (in seconds) does participant have for memorising
     memOffset: 5,
     // how much time (in seconds) does participant have for completing the task
